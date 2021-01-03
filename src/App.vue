@@ -1,16 +1,20 @@
-<template>
+<template class="app">
   <v-app>
-    <h1>Hello</h1>
+    <Navbar />
+    <v-main class="mx-4 mb-4">
+      <router-view></router-view>
+    </v-main>
   </v-app>
 </template>
 
 <script>
+import Navbar from "./components/Layouts/Navabar";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-
+    Navbar,
   },
 
   data: () => ({
@@ -18,3 +22,9 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+.app {
+  background-color: #3cd1c2;
+}
+</style>
