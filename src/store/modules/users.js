@@ -4,25 +4,38 @@ const state = {
     token: localStorage.getItem("access_token") || null,
     profile: null,
     user: null,
+    engineers: [],
 };
 
 const getters = {
-    isLoggedIn(state) {
-        return state.token !== null;
-    },
-    getProfile(state) {
-        return state.profile;
-    },
+    isLoggedIn: (state) => state.token !== null,
+    getProfile: (state) => state.profile,
+    allEngineers: (state) => state.engineers,
 };
 
 
 const actions = {
+    async fetchEngineers({ commit }) {
+        try {
+            axios.defaults.headers.common[
+                "Authorization"
+                ] = `Bearer ${localStorage.getItem("access_token")}`;
+            const response = await axios.get("engineer")
+            commit("setEngineers", response.data);
+            return response.status
+        }catch (error){
+            console.log(error)
+            return error.response
+        }
+    },
     async registerUser({ dispatch }, newUser){
       try {
-          await axios.post("user", { ...newUser })
+          const response = await axios.post("user", { ...newUser })
           console.log(dispatch)
+          return response.status
       }  catch (error){
           console.log(`Register user ${error}`)
+          return error.response
       }
     },
     async login({ commit, dispatch }, credentials ){
@@ -32,8 +45,10 @@ const actions = {
             localStorage.setItem("access_token", token);
             commit("setToken", token);
             dispatch("getUser");
+            return response.status;
         }catch (error) {
-            console.log(`Login error ${error}`)
+            console.log(`Login error ${error.response.status}`)
+            return error.response
         }
     },
     logout({ commit }) {
@@ -51,9 +66,10 @@ const actions = {
             const response = await axios.get("login")
             commit("setUser", { ...response.data });
             dispatch("getProfile", response.data.id);
-
+            return response.status
         }catch (error) {
             console.log(`Get User ${error}`)
+            return error.response
         }
     },
     async getProfile({commit}, userId){
@@ -63,8 +79,10 @@ const actions = {
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
             const response = await  axios.get(`/user/${userId}`);
             commit("setProfile", {...response.data});
+            return response.status
         }catch (error){
             console.log(error)
+            return error.response
         }
     },
     async updateUser({ dispatch }, user){
@@ -74,8 +92,10 @@ const actions = {
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
             const response = await axios.patch(`/user/${user.id}`, {...user});
             dispatch("getProfile", user.id);
+            return response.status
         }catch (error){
             console.log(error)
+            return error.response
         }
     },
     async updateProfile({ dispatch }, user){
@@ -86,8 +106,10 @@ const actions = {
 
             const response = await axios.patch(`/user/updatePassword/${user.id}`, { ...user });
             dispatch("getProfile", user.id);
+            return response.status
         }catch (error){
             console.log(`update profile ${error}`)
+            return error.response
         }
     }
 };
@@ -97,6 +119,7 @@ const mutations = {
     removeToken: () => (state.token = null),
     setUser: (state, user) => (state.user = user),
     setProfile: (state, profile) => (state.profile = profile),
+    setEngineers: (state, engineers) => (state.engineers = engineers),
 };
 
 export default {
