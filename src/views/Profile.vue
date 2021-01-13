@@ -9,7 +9,7 @@
 <!--          <Calendar/>-->
         </v-col>
     </v-row>
-<!--      <ProfileJobs/>-->
+      <ProfileJobs/>
   </v-container>
 </template>
 
@@ -17,12 +17,12 @@
 
 import UserDetails from '../components/UserDetails'
 // import Calendar from "@/components/Calendar";
-// import ProfileJobs from "@/components/Engineers/ProfileJobs";
+import ProfileJobs from "@/components/Engineers/ProfileJobs";
 
 export default {
     name:"Profile",
     components:{
-      // ProfileJobs,
+      ProfileJobs,
         UserDetails,
        // Calendar
     }

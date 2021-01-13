@@ -2,10 +2,12 @@ import axios from "axios";
 
 const state = {
     jobs: [],
+    userJobs: [],
 };
 
 const getters = {
     allJobs: (state) => state.jobs,
+    getUserJobs: (state) => state.userJobs
 };
 
 const actions = {
@@ -21,6 +23,32 @@ const actions = {
             console.log(error)
             return error.response
         }
+    },
+    async rejectJob({dispatch}, jobId){
+      try {
+          axios.defaults.headers.common[
+              "Authorization"
+              ] = `Bearer ${localStorage.getItem("access_token")}`;
+          const response = await axios.patch(`job/removeEngineer/${jobId}`)
+          dispatch("fetchJobs")
+          return response.status
+      }  catch (error){
+          console.log(error)
+          return error.response
+      }
+    },
+    async fetchUserJobs({ commit }, userId){
+      try {
+          axios.defaults.headers.common[
+              "Authorization"
+              ] = `Bearer ${localStorage.getItem("access_token")}`;
+          const response = await axios.get(`user/${userId}`)
+          commit("setUserJobs", response.data);
+          return response.status
+      }  catch (error){
+          console.log(error)
+          return error.response
+      }
     },
     async addJob({ commit }, job) {
         try {
@@ -77,6 +105,7 @@ const actions = {
 
 const mutations = {
     setJobs: (state, jobs) => (state.jobs = jobs),
+    setUserJobs: (state, userJobs) => (state.userJobs = userJobs),
     setJob: (state, job) => state.jobs.push(job),
     removeJob: (state, jobId) =>
         (state.jobs = state.jobs.filter((job) => job.id !== jobId)),

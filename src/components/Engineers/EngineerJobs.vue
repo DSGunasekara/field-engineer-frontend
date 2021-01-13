@@ -24,7 +24,7 @@
         </v-tooltip>
       </v-layout>
 
-      <v-card text v-for="(job, index) in availableJobs" :key="index">
+      <v-card text v-for="(job, index) in availableJobs" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2 ${job.status}`">
           <v-flex xs12 md2>
             <div class="caption grey--text">Job title</div>
@@ -41,11 +41,11 @@
             <div>{{ job.date | moment }}</div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <div class="caption grey--text">Rate for an hour</div>
+            <div class="caption grey--text">Rate</div>
             <div>$ {{ job.rate }}</div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <div class="caption grey--text">Required no of Engineers</div>
+            <div class="caption grey--text">Engineers</div>
             <div>{{ job.assignedEngineers.length }} / {{ job.requiredEngineers }}</div>
           </v-flex>
 
@@ -107,22 +107,17 @@ export default {
         id: jobId,
         engineer: this.getProfile._id
       }
-
       try {
         const response = await this.acceptJob(newJob)
-        if(response.status !== 200){
+        if(response !== 200){
           this.loading = false
           this.snackbar = true
-          if(response.status === 409){
-            this.text = "You already has a job on this day"
-          }else{
-            this.text = "An error occurred"
-          }
+          this.text = response.data
           return;
         }
         this.loading = false
         this.snackbar = true
-        this.text = "Assigned to the job"
+        this.text = "Engineer Added to Job"
       }catch (error){
         console.log(error)
       }

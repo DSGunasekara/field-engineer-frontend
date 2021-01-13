@@ -93,7 +93,7 @@ export default {
         location: this.location,
         description: this.description,
         lconName: this.lconName,
-        lconContactNo: this.title,
+        lconContactNo: this.lconContactNo,
         rate: this.rate,
         requiredEngineers: this.requiredEngineers,
         status: 'Pending'

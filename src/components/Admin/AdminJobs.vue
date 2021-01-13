@@ -27,7 +27,7 @@
         </v-tooltip>
       </v-layout>
 
-      <v-card text v-for="(job, index) in allJobs" :key="index">
+      <v-card text v-for="(job, index) in allJobs" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2 ${job.status}`">
           <v-flex xs12 md2>
             <div class="caption grey--text">Job title</div>
@@ -44,11 +44,11 @@
             <div>{{ job.date | moment }}</div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <div class="caption grey--text">Rate for an hour</div>
+            <div class="caption grey--text">Rate</div>
             <div>$ {{ job.rate }}</div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <div class="caption grey--text">Needed Engineers</div>
+            <div class="caption grey--text">Engineers</div>
             <div>{{ job.assignedEngineers.length }} / {{ job.requiredEngineers }}</div>
           </v-flex>
 
