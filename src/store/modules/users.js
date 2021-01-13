@@ -72,6 +72,20 @@ const actions = {
             return error.response
         }
     },
+    async removeEngineer({dispatch}, userId){
+      try {
+          axios.defaults.headers.common[
+              "Authorization"
+              ] = `Bearer ${localStorage.getItem("access_token")}`;
+
+          const response = await axios.delete(`user/${userId}`)
+          dispatch("fetchEngineers")
+          return response.status
+      }  catch (error){
+          console.log(error)
+          return error.response
+      }
+    },
     async getProfile({commit}, userId){
         try {
             axios.defaults.headers.common[

@@ -6,9 +6,8 @@
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-title class="grey--text">
-        404
-        <span>NOT_FOUND</span>
+      <v-toolbar-title style="color: #43576D; text-shadow: 1px 1px #43576D">
+        FE Manager
       </v-toolbar-title>
       <v-spacer></v-spacer>
        <Logout v-if="isLoggedIn()"/>
@@ -72,6 +71,6 @@ export default {
 
 <style scoped>
 .v-navigation-drawer.navColor {
-  background-color: #f29f3d;
+  background-color: #43576D;
 }
 </style>

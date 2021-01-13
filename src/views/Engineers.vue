@@ -42,9 +42,10 @@
             </div>
           </v-card-text>
           <v-card-actions>
-            <v-btn text color="grey">
-              <v-icon small left>mdi-message</v-icon>
-              <span class="">Message</span>
+
+            <v-btn v-if="getProfile.role === 'Admin'" text color="grey" @click="deleteEngineer(engineer._id)">
+              <v-icon small left>mdi-delete</v-icon>
+              <span class="">Remove</span>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -64,9 +65,16 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchEngineers", "getUser"]),
+    ...mapActions(["fetchEngineers", "getUser", "removeEngineer"]),
+    async deleteEngineer(engineerId){
+      try {
+        await this.removeEngineer(engineerId)
+      }catch (error){
+        console.log(error)
+      }
   },
-  computed: mapGetters(["allEngineers"]),
+  },
+  computed: mapGetters(["allEngineers", "getProfile"]),
   async created() {
     try {
       await this.fetchEngineers()

@@ -23,7 +23,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-      <v-row>
+      <v-row style="padding-top: 5px">
         <v-col class="ml-5" cols="auto">Location: </v-col>
         <v-col cols="auto" class="font-weight-bold">{{ jobView[0].location }}</v-col>
       </v-row>

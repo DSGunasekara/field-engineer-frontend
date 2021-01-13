@@ -98,7 +98,7 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.fetchUserJobs(this.getProfile._id)
   },
   computed:{

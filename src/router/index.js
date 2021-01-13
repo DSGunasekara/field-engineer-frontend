@@ -38,7 +38,9 @@ const routes = [
     path: "/landing",
     name: "landing",
     component: Landing,
-
+    meta: {
+      requireVisitors: true,
+    },
   },
   {
     path: "/engineers",
