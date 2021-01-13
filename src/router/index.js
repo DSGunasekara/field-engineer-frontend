@@ -5,6 +5,7 @@ import Engineers from "@/views/Engineers";
 import Jobs from "@/views/Jobs";
 import Profile from "@/views/Profile";
 import ProfileUpdate from "@/views/ProfileUpdate";
+import Job from "@/components/Job";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,15 @@ const routes = [
     path: "/jobs",
     name: "jobs",
     component: Jobs,
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/job/:id",
+    name: "User Job",
+    component: Job,
+    props: true,
     meta: {
       requireAuth: true,
     },

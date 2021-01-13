@@ -106,14 +106,15 @@ export default {
         a[prop] < b[prop] ? -1 : 1
       );
     },
-    removeJob(id) {
+    async removeJob(id) {
       //TODO: create a modal to asking agree to delete
-      this.deleteJob(id)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      try {
+       await this.deleteJob(id);
+      }catch (error){
+        console.log(error)
+      }
     },
     viewJob(jobId){
-      console.log(jobId)
       this.$router.push(`/job/${jobId}`)
     }
   },
@@ -129,14 +130,15 @@ export default {
       return moment(date).format('MMM D YYYY, h:mm a');
     }
   },
-  created() {
-    this.fetchJobs()
-      .then(() => {
+  async created() {
+    try {
+      const response = await this.fetchJobs();
+      if(response === 200){
         this.loading = false;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+    }catch (error){
+      console.log(error)
+    }
   },
 };
 </script>

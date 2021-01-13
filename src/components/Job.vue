@@ -15,9 +15,9 @@
           <v-expansion-panel-header class="font-weight-bold">Assigned Engineers</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="ml-5" v-for="engineer in jobView[0].assignedEngineers" :key="engineer._id">
-              <v-col><v-icon>mdi-face</v-icon> {{ engineer.user.name }}</v-col>
-              <v-col><v-icon>mdi-email</v-icon> {{ engineer.user.email }}</v-col>
-              <v-col><v-icon>mdi-cellphone-android</v-icon>{{ engineer.user.contactNo }}</v-col>
+              <v-col><v-icon>mdi-face</v-icon> {{ engineer.name }}</v-col>
+              <v-col><v-icon>mdi-email</v-icon> {{ engineer.email }}</v-col>
+              <v-col><v-icon>mdi-cellphone-android</v-icon>{{ engineer.contactNo }}</v-col>
               <v-col><v-icon>mdi-star</v-icon>{{ engineer.rate }}</v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -40,7 +40,7 @@
         <v-col class="font-weight-bold" cols="auto">{{ jobView[0].lconContactNo }}</v-col>
       </v-row>
     </v-card>
-    <h1 style="text-align: center">Job Timeline</h1>
+    <h1 class="grey--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
 <!--    <v-timeline>-->
 <!--      <v-timeline-item-->
 <!--          v-for="n in 4"-->
@@ -79,21 +79,20 @@ export default {
     }
   },
   methods:{
-    ...mapActions(["fetchEngineerJobList"])
+    ...mapActions(["fetchJobs"])
   },
   computed:{
-    ...mapGetters(["allEngineerJobList"]),
+    ...mapGetters(["allJobs"]),
     jobView(){
-      return this.allEngineerJobList.filter(job=> job._id === this.$route.params.id)
+      return this.allJobs.filter(job=> job._id === this.$route.params.id)
     }
   },
-  created() {
-    // this.fetchEngineerJobList()
-    // .then((res)=>{
-    //   console.log(res)
-    // }).catch((err)=>{
-    //   console.log(err)
-    // })
+  async created() {
+    try {
+      await this.fetchJobs()
+    }catch (error){
+      console.log(error)
+    }
   }
 
 }
