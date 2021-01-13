@@ -111,7 +111,21 @@ const actions = {
             console.log(`update profile ${error}`)
             return error.response
         }
-    }
+    },
+    async updatePassword({ dispatch }, user) {
+        try {
+            axios.defaults.headers.common[
+                "Authorization"
+                ] = `Bearer ${localStorage.getItem("access_token")}`;
+
+            const response = await axios.patch(`/user/updatePassword/${user.id}`, { ...user })
+            dispatch("getProfile", user.id);
+            return response.status
+        }catch (error){
+            console.log(error)
+            return error.response
+        }
+    },
 };
 
 const mutations = {

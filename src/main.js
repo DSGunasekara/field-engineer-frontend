@@ -5,7 +5,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://field-engineer-backend.herokuapp.com/api";
+axios.defaults.baseURL = "https://field-engineer-backend.herokuapp.com/";
 
 Vue.config.productionTip = false;
 
