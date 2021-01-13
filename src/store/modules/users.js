@@ -20,7 +20,7 @@ const actions = {
             axios.defaults.headers.common[
                 "Authorization"
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
-            const response = await axios.get("engineer")
+            const response = await axios.get("user/engineers")
             commit("setEngineers", response.data);
             return response.status
         }catch (error){

@@ -16,16 +16,20 @@ const actions = {
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
             const response = await axios.get("job")
             commit("setJobs", response.data);
+            return response.status
         }catch (error){
             console.log(error)
+            return error.response
         }
     },
     async addJob({ commit }, job) {
         try {
             const response = await axios.post("job", { ...job })
             commit("setJob", response.data);
+            return response.status
         }catch (error){
             console.log(error)
+            return error.response
         }
     },
     async deleteJob({ commit, dispatch }, job) {
@@ -34,11 +38,13 @@ const actions = {
                 "Authorization"
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
 
-            await axios.delete(`job/${job}`)
+            const response =await axios.delete(`job/${job}`)
             commit("removeJob", job);
             dispatch("fetchJobs");
+            return response.status
         }catch (error){
             console.log(error)
+            return error.response
         }
     },
     async updateJob({ dispatch }, job) {
@@ -46,10 +52,13 @@ const actions = {
             axios.defaults.headers.common[
                 "Authorization"
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
-            await axios.patch(`job/${job.id}`, { ...job })
+            console.log(job)
+            const response = await axios.patch(`job/${job.id}`, { ...job })
             dispatch("fetchJobs");
+            return response.status
         }catch (error){
             console.log(error)
+            return error.response
         }
     },
     async acceptJob({ dispatch }, job){
@@ -57,10 +66,11 @@ const actions = {
             axios.defaults.headers.common[
                 "Authorization"
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
-            await axios.patch(`job/addEngineer/${job.id}`, {...job})
+            const response = await axios.patch(`job/assignEngineer/${job.id}`, {...job})
             dispatch("fetchJobs")
+            return response.status
         }catch (error){
-            console.log(error)
+            return error.response
         }
     },
 };

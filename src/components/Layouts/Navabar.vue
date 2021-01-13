@@ -11,7 +11,7 @@
         <span>NOT_FOUND</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- <Logout v-if="isLoggedIn()"/> -->
+       <Logout v-if="isLoggedIn()"/>
     </v-toolbar>
 
     <v-navigation-drawer
@@ -44,17 +44,17 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
-// import Logout from '../Logout'
+import { mapGetters } from "vuex";
+import Logout from '../Logout'
 
 
 export default {
   name: "Navbar",
   components:{
-    // Logout,
+    Logout,
   },
   methods: {
-    // ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn"]),
   },
   data() {
     return {
