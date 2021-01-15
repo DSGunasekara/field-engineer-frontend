@@ -10,7 +10,7 @@
         FE Manager
       </v-toolbar-title>
       <v-spacer></v-spacer>
-       <Logout v-if="isLoggedIn()"/>
+       <Logout v-if="isLoggedIn"/>
     </v-toolbar>
 
     <v-navigation-drawer
@@ -22,7 +22,7 @@
     >
       <v-list class="my-2">
         <v-list-item
-          v-for="link in links"
+          v-for="link in getLinks"
           :key="link.text"
           router
           :to="link.route"
@@ -53,19 +53,29 @@ export default {
     Logout,
   },
   methods: {
-    ...mapGetters(["isLoggedIn"]),
+
   },
   data() {
     return {
       drawer: null,
       links: [
         { icon: "mdi-view-dashboard", text: "Dashboard", route: "/" },
+        { icon: "mdi-account", text: "Profile", route: "/profile" },
         { icon: "mdi-folder", text: "Jobs", route: "/jobs" },
         { icon: "mdi-account-group", text: "Engineers", route: "/engineers" },
-        { icon: "mdi-account", text: "Profile", route: "/profile" },
       ],
     };
   },
+  computed:{
+    ...mapGetters(["isLoggedIn", "getProfile"]),
+    getLinks(){
+      if (this.getProfile.role === "Admin"){
+        return this.links;
+      }else{
+        return this.links.filter(link=> link.text !== "Engineers")
+      }
+    }
+  }
 };
 </script>
 

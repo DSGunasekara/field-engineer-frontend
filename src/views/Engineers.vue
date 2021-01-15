@@ -74,7 +74,9 @@ export default {
       }
   },
   },
-  computed: mapGetters(["allEngineers", "getProfile"]),
+  computed: {
+    ...mapGetters(["allEngineers", "getProfile"]),
+  },
   async created() {
     try {
       await this.fetchEngineers()

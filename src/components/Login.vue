@@ -71,7 +71,7 @@ export default {
         this.loading = false;
         this.snackbar = true;
         this.text = "Logged In successfully";
-        await this.$router.push("/engineers");
+        await this.$router.push("/jobs");
       }catch (error){
         console.log(error)
       }
