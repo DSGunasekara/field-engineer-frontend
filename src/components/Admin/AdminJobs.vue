@@ -147,6 +147,9 @@ export default {
 .project.Assigned {
   border-left: 4px solid #3cd1c2;
 }
+.project.Done {
+  border-left: 4px solid #3cd150;
+}
 .project.Pending {
   border-left: 4px solid #ffaa2c;
 }
