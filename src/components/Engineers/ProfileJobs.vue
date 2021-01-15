@@ -96,10 +96,13 @@ export default {
       }catch (error){
         console.log(error)
       }
+    },
+    async getData(){
+      await this.fetchUserJobs(this.getProfile._id)
     }
   },
   async created() {
-    await this.fetchUserJobs(this.getProfile._id)
+    await this.getData()
   },
   computed:{
     ...mapGetters(["getUserJobs", "getProfile"])

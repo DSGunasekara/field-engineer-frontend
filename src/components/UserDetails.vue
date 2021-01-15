@@ -2,7 +2,7 @@
   <v-card>
     <v-list-item>
       <v-list-item-content class="grey--text headline ma-2">
-        <div v-if="getProfile.name !== null">
+        <div v-if="getProfile !== null">
           <v-list-item-title class="headline ma-2">
             <v-icon>mdi-account</v-icon>
             {{ getProfile.name }}
@@ -60,6 +60,13 @@ export default {
   },
   computed: {
     ...mapGetters(["getProfile"]),
+    // getDetails(){
+    //   if(!this.getProfile){
+    //     return this.getProfile
+    //   }else {
+    //     return this.getProfile
+    //   }
+    // }
   },
   async created() {
     try {
