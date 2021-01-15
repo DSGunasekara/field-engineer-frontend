@@ -69,7 +69,9 @@ export default {
   computed:{
     ...mapGetters(["isLoggedIn", "getProfile"]),
     getLinks(){
-      if (this.getProfile.role === "Admin"){
+      if(!this.getProfile){
+        return this.links
+      } else if (this.getProfile.role === "Admin"){
         return this.links;
       }else{
         return this.links.filter(link=> link.text !== "Engineers")

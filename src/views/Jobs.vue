@@ -1,7 +1,7 @@
 
 <template>
   <div class="container">
-    <div v-if="getProfile.role === 'Admin'">
+    <div v-if="getRole === 'Admin'">
       <AdminJobs />
     </div>
     <div v-else>
@@ -22,6 +22,13 @@ export default {
   },
   computed: {
     ...mapGetters(["getProfile"]),
+    getRole(){
+      if(!this.getProfile){
+        return "Guest"
+      }else{
+        return this.getProfile.role
+      }
+    }
   },
   methods:{
     ...mapActions(["getUser"])
