@@ -81,7 +81,6 @@ export default {
     },
     async removeJob(jobId){
       try {
-        console.log(this.getProfile._id)
         const response = await this.rejectJob(jobId)
         if(response !== 200){
           this.loading = false
