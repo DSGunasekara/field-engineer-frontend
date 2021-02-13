@@ -6,6 +6,7 @@ import Jobs from "@/views/Jobs";
 import Profile from "@/views/Profile";
 import ProfileUpdate from "@/views/ProfileUpdate";
 import Job from "@/components/Job";
+import AdminInventory from "@/components/Admin/AdminInventory";
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,14 @@ const routes = [
     path: "/engineers",
     name: "engineers",
     component: Engineers,
+    meta: {
+      requireAdmin:true,
+    },
+  },
+  {
+    path: "/inventory",
+    name: "inventory",
+    component: AdminInventory,
     meta: {
       requireAdmin:true,
     },

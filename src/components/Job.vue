@@ -4,21 +4,21 @@
     <v-card>
       <v-row>
         <v-col class="ml-5 " cols="auto">Title: </v-col>
-        <v-col cols="auto" class="font-weight-bold">{{ jobView[0].title }} </v-col>
+        <v-col cols="auto" class="font-weight-bold">{{ jobView.title }} </v-col>
       </v-row>
       <v-row>
         <v-col class="ml-5 " cols="auto">Date: </v-col>
-        <v-col cols="auto" class="font-weight-bold">{{ jobView[0].date | moment}} </v-col>
+        <v-col cols="auto" class="font-weight-bold">{{ jobView.date | moment}} </v-col>
       </v-row>
       <v-row>
         <v-col class="ml-5" cols="auto">Description: </v-col>
-        <v-col cols="auto" class="font-weight-bold">{{ jobView[0].description }}</v-col>
+        <v-col cols="auto" class="font-weight-bold">{{ jobView.description }}</v-col>
       </v-row>
       <v-expansion-panels focusable>
         <v-expansion-panel>
           <v-expansion-panel-header class="font-weight-bold">Assigned Engineers</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row class="ml-5" v-for="engineer in jobView[0].assignedEngineers" :key="engineer._id">
+            <v-row class="ml-5" v-for="engineer in jobView.assignedEngineers" :key="engineer._id">
               <v-col><v-icon>mdi-face</v-icon> {{ engineer.name }}</v-col>
               <v-col><v-icon>mdi-email</v-icon> {{ engineer.email }}</v-col>
               <v-col><v-icon>mdi-cellphone-android</v-icon>{{ engineer.contactNo }}</v-col>
@@ -29,19 +29,19 @@
       </v-expansion-panels>
       <v-row style="padding-top: 5px">
         <v-col class="ml-5" cols="auto">Location: </v-col>
-        <v-col cols="auto" class="font-weight-bold">{{ jobView[0].location }}</v-col>
+        <v-col cols="auto" class="font-weight-bold">{{ jobView.location }}</v-col>
       </v-row>
       <v-row>
         <v-col class="ml-5" cols="auto">Rate for an hour: </v-col>
-        <v-col class="font-weight-bold" cols="auto">${{ jobView[0].rate }}</v-col>
+        <v-col class="font-weight-bold" cols="auto">${{ jobView.rate }}</v-col>
       </v-row>
       <v-row>
         <v-col class="ml-5" cols="auto">Customer Name: </v-col>
-        <v-col class="font-weight-bold" cols="auto">{{ jobView[0].lconName }}</v-col>
+        <v-col class="font-weight-bold" cols="auto">{{ jobView.lconName }}</v-col>
       </v-row>
       <v-row>
         <v-col class="ml-5" cols="auto">Customer Contact No: </v-col>
-        <v-col class="font-weight-bold" cols="auto">{{ jobView[0].lconContactNo }}</v-col>
+        <v-col class="font-weight-bold" cols="auto">{{ jobView.lconContactNo }}</v-col>
       </v-row>
     </v-card>
     <h1 class="grey--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
@@ -68,10 +68,22 @@
 <!--      </v-timeline-item>-->
 <!--    </v-timeline>-->
     <div>
-      <v-btn @click="startJob">Start Job</v-btn> <span style="margin-left: 20px" v-if="jobView[0].startedTime">{{ jobView[0].startedTime | moment}}</span>
-      <br><br><v-btn @click="endJob">End Job</v-btn><span style="margin-left: 20px" v-if="jobView[0].endTime">{{ jobView[0].endTime | moment}}</span>
-    </div>
+      <v-btn @click="startJob">Start Job</v-btn> <span style="margin-left: 20px" v-if="jobView.startedTime">{{ jobView.startedTime | moment}}</span>
+      <br><br><v-btn @click="endJob">End Job</v-btn><span style="margin-left: 20px" v-if="jobView.endTime">{{ jobView.endTime | moment}}</span>
+<!--      <v-snackbar top v-model="snackbar">-->
+<!--        {{ text }}-->
 
+<!--        <template v-slot:action="{ attrs }">-->
+<!--          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" :loading="loading">Close</v-btn>-->
+<!--        </template>-->
+<!--      </v-snackbar>-->
+      <v-snackbar top v-model="snackbar">
+        {{ text }}
+        <template v-slot:action="{ attrs }">
+          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" :loading="loading">Close</v-btn>
+        </template>
+      </v-snackbar>
+    </div>
 
   </div>
 </template>
@@ -82,8 +94,12 @@ import moment from "moment";
 
 export default {
   name: "Job",
-  date(){
+  data(){
     return {
+      jobs: [],
+      snackbar: false,
+      loading: false,
+      text: ''
     }
   },
   methods:{
@@ -96,8 +112,15 @@ export default {
           startedTime: time,
           setDate: true
         }
-        console.log(job)
-        await this.updateJob(job)
+        const response = await this.updateJob(job)
+        this.snackbar = true
+        this.loading = false
+        if(response !== 200){
+          this.text = response.data
+          this.snackbar = false
+          return
+        }
+        this.text = "Job Started"
       }catch (error){
         console.log(error)
       }
@@ -111,7 +134,15 @@ export default {
           endTime: time,
           setDate: true
         }
-        await this.updateJob(job)
+        const response = await this.updateJob(job)
+        this.snackbar = true
+        this.loading = false
+        if(response !== 200){
+          this.text = response.data
+          this.snackbar = false
+          return
+        }
+        this.text = "Job Ended"
       }catch (error){
         console.log(error)
       }
@@ -120,7 +151,8 @@ export default {
   computed:{
     ...mapGetters(["allJobs", "getProfile"]),
     jobView(){
-      return this.allJobs.filter(job=> job._id === this.$route.params.id)
+      return  this.allJobs.filter(job=> job._id === this.$route.params.id)[0]
+
     },
     getRole(){
       return this.getProfile.role
