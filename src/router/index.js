@@ -56,7 +56,7 @@ const routes = [
     name: "inventory",
     component: AdminInventory,
     meta: {
-      requireAdmin:true,
+      requireAuth:true,
     },
   },
   {

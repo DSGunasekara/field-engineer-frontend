@@ -39,17 +39,23 @@
             <div>{{ item.category }}</div>
           </v-flex>
 
-          <v-flex xs6 sm4 md2>
+          <v-flex xs6 sm4 md1>
             <div class="caption grey--text">Quantity</div>
-            <div>{{ item.qty - item.allocatedQty}}</div>
+            <div>{{ item.qty}}</div>
           </v-flex>
           <v-flex xs6 sm4 md2>
-            <div class="caption grey--text">Allocated Quantity</div>
-            <div> {{ item.allocatedQty }}</div>
+            <div class="caption grey--text">Price</div>
+            <div> {{ item.price }}</div>
           </v-flex>
           <v-flex xs6 sm4 md2>
             <div class="caption grey--text">Location</div>
             <div>{{ item.inventoryLocation }}</div>
+          </v-flex>
+          <v-flex xs6 sm4 md1>
+            <AddRequest v-bind:item="item"/>
+<!--            <v-btn text class="grey&#45;&#45;text" @click="requestItem(item._id)"-->
+<!--            ><v-icon>mdi-cart-arrow-down</v-icon> Request</v-btn-->
+<!--            >-->
           </v-flex>
 
           <v-flex xs6 sm4 md1>
@@ -73,11 +79,13 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import AddItem from "@/components/AddItem";
+import AddRequest from "@/components/Engineers/AddRequest";
 
 export default {
   name: "AdminInventory",
   components:{
-    AddItem
+    AddItem,
+    AddRequest
   },
   methods:{
     ...mapActions(["fetchItems", "removeItem"]),
