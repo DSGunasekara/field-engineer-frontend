@@ -55,12 +55,12 @@
             <AddRequest v-bind:item="item"/>
           </v-flex>
 
-          <v-flex xs6 sm4 md1>
+          <v-flex xs6 sm4 md1 v-if="getRole === 'Admin'">
             <v-btn text class="grey--text" @click="deleteItem(item._id)"
             ><v-icon>mdi-delete</v-icon> Delete</v-btn
             >
           </v-flex>
-          <v-flex xs6 sm4 md1>
+          <v-flex xs6 sm4 md1 v-if="getRole === 'Admin'">
             <v-btn text class="grey--text" @click="viewItem(item._id)"
             ><v-icon>mdi-eye</v-icon> View</v-btn
             >
