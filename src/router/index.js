@@ -7,6 +7,7 @@ import Profile from "@/views/Profile";
 import ProfileUpdate from "@/views/ProfileUpdate";
 import Job from "@/components/Job";
 import AdminInventory from "@/components/Admin/AdminInventory";
+import Request from "@/components/Admin/Request";
 
 Vue.use(VueRouter);
 
@@ -55,6 +56,14 @@ const routes = [
     path: "/inventory",
     name: "inventory",
     component: AdminInventory,
+    meta: {
+      requireAuth:true,
+    },
+  },
+  {
+    path: "/requests",
+    name: "requests",
+    component: Request,
     meta: {
       requireAuth:true,
     },

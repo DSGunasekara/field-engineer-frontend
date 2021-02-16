@@ -64,6 +64,7 @@ export default {
         { icon: "mdi-folder", text: "Jobs", route: "/jobs" },
         { icon: "mdi-account-group", text: "Engineers", route: "/engineers" },
         { icon: "mdi-store", text: "Inventory", route: "/inventory" },
+        { icon: "mdi-message-processing", text: "Requests", route: "/requests" },
       ],
     };
   },

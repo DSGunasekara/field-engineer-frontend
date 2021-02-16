@@ -45,17 +45,14 @@
           </v-flex>
           <v-flex xs6 sm4 md2>
             <div class="caption grey--text">Price</div>
-            <div> {{ item.price }}</div>
+            <div> Rs:{{ item.price }}</div>
           </v-flex>
           <v-flex xs6 sm4 md2>
             <div class="caption grey--text">Location</div>
             <div>{{ item.inventoryLocation }}</div>
           </v-flex>
-          <v-flex xs6 sm4 md1>
+          <v-flex xs6 sm4 md1 v-if="getRole !== 'Admin'">
             <AddRequest v-bind:item="item"/>
-<!--            <v-btn text class="grey&#45;&#45;text" @click="requestItem(item._id)"-->
-<!--            ><v-icon>mdi-cart-arrow-down</v-icon> Request</v-btn-->
-<!--            >-->
           </v-flex>
 
           <v-flex xs6 sm4 md1>
@@ -98,7 +95,14 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(["allItems"])
+    ...mapGetters(["allItems", "getProfile"]),
+    getRole(){
+      if(!this.getProfile){
+        return "Guest"
+      }else{
+        return this.getProfile.role
+      }
+    }
   },
   async created(){
     await this.fetchItems()

@@ -34,6 +34,19 @@ const actions = {
             console.log(error)
             return error.response
         }
+    },
+    async updateRequest({dispatch}, request){
+        try {
+            axios.defaults.headers.common[
+                "Authorization"
+                ] = `Bearer ${localStorage.getItem("access_token")}`;
+            const response = await axios.patch(`request/${request._id}`, {...request})
+            dispatch("fetchRequests")
+            return response.status
+        }catch (error){
+            console.log(error)
+            return error.response
+        }
     }
 
 }
