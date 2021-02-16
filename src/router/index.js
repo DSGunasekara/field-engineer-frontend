@@ -7,7 +7,7 @@ import Profile from "@/views/Profile";
 import ProfileUpdate from "@/views/ProfileUpdate";
 import Job from "@/components/Job";
 import AdminInventory from "@/components/Admin/AdminInventory";
-import Request from "@/components/Admin/Request";
+import Request from "@/components/Request";
 
 Vue.use(VueRouter);
 

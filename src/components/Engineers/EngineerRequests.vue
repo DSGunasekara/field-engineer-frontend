@@ -55,13 +55,8 @@
           </v-flex>
 
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="approve(request._id)"
-            ><v-icon>mdi-check</v-icon></v-btn
-            >
-          </v-flex>
-          <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="reject(request._id)"
-            ><v-icon>mdi-close</v-icon></v-btn
+            <v-btn text class="grey--text" @click="removeReq(request._id)"
+            ><v-icon>mdi-delete</v-icon></v-btn
             >
           </v-flex>
 
@@ -73,51 +68,22 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
-name: "Request",
-  data:()=>({
+import {mapActions, mapGetters} from "vuex";
 
-}),
+export default {
+name: "EngineerRequests",
   methods:{
-    ...mapActions(["fetchRequests", "updateRequest"]),
-    async approve(id){
+    ...mapActions(["fetchRequests", "deleteRequest"]),
+    async removeReq(id){
       try {
-        const request = {
-          _id: id,
-          status: "Approved"
-        }
-        const res = await this.updateRequest(request)
-        if(res !== 200){
-          return
-        }else {
-          await this.fetchRequests()
-          return
-        }
-      }catch (error){
-        console.log(error)
-      }
-    },
-    async reject(id){
-      try {
-        const request = {
-          _id: id,
-          status: "Rejected"
-        }
-        const res = await this.updateRequest(request)
-        if(res !== 200){
-          return
-        }else {
-          await this.fetchRequests()
-          return
-        }
+        await this.deleteRequest(id)
       }catch (error){
         console.log(error)
       }
     }
   },
   computed:{
-    ...mapGetters(["allRequests"])
+    ...mapGetters(["allRequests", "getProfile"])
   },
   async created() {
     await this.fetchRequests()
