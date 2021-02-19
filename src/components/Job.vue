@@ -43,6 +43,18 @@
         <v-col class="ml-5" cols="auto">Customer Contact No: </v-col>
         <v-col class="font-weight-bold" cols="auto">{{ jobView.lconContactNo }}</v-col>
       </v-row>
+      <v-expansion-panels focusable>
+        <v-expansion-panel>
+          <v-expansion-panel-header class="font-weight-bold">Assigned Equipments</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row class="ml-5" v-for="req in getReqItems" :key="req._id">
+              <v-col><v-icon>mdi-tools</v-icon> {{ req.item.itemName }}</v-col>
+              <v-col>Quantity: {{ req.qty }}</v-col>
+              <v-col><v-icon>mdi-map-marker</v-icon>{{ req.item.inventoryLocation }}</v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-card>
     <h1 class="grey--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
 <!--    <v-timeline>-->
@@ -103,7 +115,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(["fetchJobs", "updateJob", "fetchUserJobs"]),
+    ...mapActions(["fetchJobs", "updateJob", "fetchUserJobs","fetchReqItems"]),
     async startJob(){
       try {
         const time = new Date().toISOString()
@@ -149,7 +161,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(["allJobs", "getProfile"]),
+    ...mapGetters(["allJobs", "getProfile", "getReqItems"]),
     jobView(){
       return  this.allJobs.filter(job=> job._id === this.$route.params.id)[0]
 
@@ -161,6 +173,7 @@ export default {
   async created() {
     try {
       await this.fetchJobs()
+      await this.fetchReqItems(this.$route.params.id)
     }catch (error){
       console.log(error)
     }
