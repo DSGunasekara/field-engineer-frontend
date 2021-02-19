@@ -3,7 +3,7 @@
   <div class="dashboard">
     <v-container class="my-5">
       <h1 class="subheading grey--text">Inventory</h1>
-      <AddItem />
+      <AddItem v-if="getRole === 'Admin'"/>
       <!-- TODO: make this a modal  -->
       <v-layout row justify-start class="mb-3">
         <v-tooltip top>

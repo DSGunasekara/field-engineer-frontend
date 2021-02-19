@@ -25,7 +25,7 @@
           <span>Sort by project author</span>
         </v-tooltip>
       </v-layout>
-      <v-card text v-for="(request, index) in allRequests" :key="index" style="margin-top: 15px">
+      <v-card text v-for="(request, index) in getUserReqs" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2`">
           <v-flex xs12 md2>
             <div class="caption grey--text">Item</div>
@@ -83,7 +83,10 @@ name: "EngineerRequests",
     }
   },
   computed:{
-    ...mapGetters(["allRequests", "getProfile"])
+    ...mapGetters(["allRequests", "getProfile"]),
+    getUserReqs(){
+      return this.allRequests.filter(req=> req.requestedUser._id === this.getProfile._id)
+    }
   },
   async created() {
     await this.fetchRequests()

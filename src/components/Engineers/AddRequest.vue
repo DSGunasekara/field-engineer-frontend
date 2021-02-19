@@ -80,7 +80,6 @@ name: "AddRequest",
         qty: this.qty,
         note: this.note
       }
-      console.log(request)
       const res = await this.addRequest(request)
       if(res !== 200){
         return
