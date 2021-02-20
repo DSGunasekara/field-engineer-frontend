@@ -61,9 +61,7 @@
             >
           </v-flex>
           <v-flex xs6 sm4 md1 v-if="getRole === 'Admin'">
-            <v-btn text class="grey--text" @click="viewItem(item._id)"
-            ><v-icon>mdi-eye</v-icon> View</v-btn
-            >
+            <UpdateInventory v-bind:item="item"/>
           </v-flex>
 
         </v-layout>
@@ -77,12 +75,14 @@
 import { mapActions, mapGetters } from "vuex";
 import AddItem from "@/components/AddItem";
 import AddRequest from "@/components/Engineers/AddRequest";
+import UpdateInventory from "@/components/Admin/UpdateInventory";
 
 export default {
   name: "AdminInventory",
   components:{
     AddItem,
-    AddRequest
+    AddRequest,
+    UpdateInventory
   },
   methods:{
     ...mapActions(["fetchItems", "removeItem"]),
