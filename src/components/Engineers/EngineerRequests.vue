@@ -2,7 +2,7 @@
   <!-- FIXME:Date need to fixed -->
   <div class="dashboard">
     <v-container class="my-5">
-      <h1 class="subheading grey--text">Requests</h1>
+      <h1 class="subheading teal--text">Requests</h1>
       <!-- TODO: make this a modal  -->
       <v-layout row justify-start class="mb-3">
         <v-tooltip top>
@@ -55,7 +55,7 @@
           </v-flex>
 
           <v-flex xs6 sm4 md1 v-if="request.status !== 'Approved'">
-            <v-btn text class="grey--text" @click="removeReq(request._id)"
+            <v-btn outlined color="red" @click="removeReq(request._id)"
             ><v-icon>mdi-delete</v-icon></v-btn
             >
           </v-flex>

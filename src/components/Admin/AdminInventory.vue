@@ -2,7 +2,7 @@
   <!-- FIXME:Date need to fixed -->
   <div class="dashboard">
     <v-container class="my-5">
-      <h1 class="subheading grey--text">Inventory</h1>
+      <h1 class="subheading teal--text">Inventory</h1>
       <AddItem v-if="getRole === 'Admin'"/>
       <!-- TODO: make this a modal  -->
       <v-layout row justify-start class="mb-3">
@@ -56,7 +56,7 @@
           </v-flex>
 
           <v-flex xs6 sm4 md1 v-if="getRole === 'Admin'">
-            <v-btn text class="grey--text" @click="deleteItem(item._id)"
+            <v-btn outlined color="red" @click="deleteItem(item._id)"
             ><v-icon>mdi-delete</v-icon> Delete</v-btn
             >
           </v-flex>

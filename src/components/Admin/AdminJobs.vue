@@ -2,7 +2,7 @@
   <!-- FIXME:Date need to fixed -->
   <div class="dashboard">
     <v-container class="my-5">
-      <h1 class="subheading grey--text">Jobs</h1>
+      <h1 class="subheading teal--text">Jobs</h1>
       <AddJob />
       <!-- TODO: make this a modal  -->
       <v-layout row justify-start class="mb-3">
@@ -66,16 +66,16 @@
             <!-- <v-btn text class="grey--text">
               <v-icon>mdi-file-edit-outline</v-icon> edit</v-btn
             > -->
-            <UpdateJob v-bind:job="job" />
+            <UpdateJob class="mx-2" v-bind:job="job" />
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="removeJob(job._id)"
-              ><v-icon>mdi-delete</v-icon> Delete</v-btn
+            <v-btn outlined color="red" class="mx-1" @click="removeJob(job._id)"
+              ><v-icon>mdi-delete</v-icon></v-btn
             >
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="viewJob(job._id)"
-            ><v-icon>mdi-eye</v-icon> View</v-btn
+            <v-btn outlined color="green" @click="viewJob(job._id)"
+            ><v-icon>mdi-eye</v-icon></v-btn
             >
           </v-flex>
         </v-layout>

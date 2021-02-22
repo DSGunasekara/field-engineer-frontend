@@ -2,7 +2,7 @@
   <v-row>
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="grey" text dark v-bind="attrs" v-on="on" class="my-3"> <v-icon>mdi-cart-arrow-down</v-icon> Request </v-btn>
+        <v-btn color="green" outlined dark v-bind="attrs" v-on="on" class="my-3"> <v-icon>mdi-cart-arrow-down</v-icon> Request </v-btn>
       </template>
       <v-card>
         <v-card-title>

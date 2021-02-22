@@ -2,7 +2,7 @@
   <!-- FIXME:Date need to fixed -->
   <div class="dashboard">
     <v-container class="my-5">
-      <h1 class="subheading grey--text">Requests</h1>
+      <h1 class="subheading teal--text">Requests</h1>
       <!-- TODO: make this a modal  -->
       <v-layout row justify-start class="mb-3">
         <v-tooltip top>
@@ -55,12 +55,12 @@
           </v-flex>
 
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="approve(request._id)"
+            <v-btn outlined color="green" @click="approve(request._id)"
             ><v-icon>mdi-check</v-icon></v-btn
             >
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="reject(request._id)"
+            <v-btn outlined color="red" @click="reject(request._id)"
             ><v-icon>mdi-close</v-icon></v-btn
             >
           </v-flex>

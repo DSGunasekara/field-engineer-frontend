@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="subheading grey--text">Profile</h1>
+    <h1 class="subheading teal--text">Profile</h1>
     <v-row>
         <v-col cols="12" md="4">
             <UserDetails/>

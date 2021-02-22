@@ -2,8 +2,8 @@
   <v-row>
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="grey" text dark v-bind="attrs" v-on="on" style="margin-top: 10px">
-          <v-icon>mdi-file-edit-outline</v-icon> Update
+        <v-btn color="blue" outlined dark v-bind="attrs" v-on="on" style="margin-top: 10px">
+          <v-icon>mdi-file-edit-outline</v-icon>
         </v-btn>
       </template>
       <v-card>

@@ -35,12 +35,12 @@
             </div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="viewJob(job._id)"
+            <v-btn outlined color="green" class="mx-2" @click="viewJob(job._id)"
             ><v-icon>mdi-eye</v-icon> View</v-btn
             >
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn text class="grey--text" @click="removeJob(job._id)"
+            <v-btn outlined color="red" class="mx-5" @click="removeJob(job._id)"
             ><v-icon>mdi-delete</v-icon> Reject</v-btn
             >
           </v-flex>

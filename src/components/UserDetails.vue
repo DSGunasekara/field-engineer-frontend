@@ -10,8 +10,8 @@
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    text
-                    class="grey--text"
+                    outlined
+                    color="blue"
                     v-on="on"
                     router
                     :to="'/updateProfile'"

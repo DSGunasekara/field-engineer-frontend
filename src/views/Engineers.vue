@@ -43,7 +43,7 @@
           </v-card-text>
           <v-card-actions>
 
-            <v-btn v-if="getProfile.role === 'Admin'" text color="grey" @click="deleteEngineer(engineer._id)">
+            <v-btn v-if="getProfile.role === 'Admin'" outlined color="red" @click="deleteEngineer(engineer._id)">
               <v-icon small left>mdi-delete</v-icon>
               <span class="">Remove</span>
             </v-btn>

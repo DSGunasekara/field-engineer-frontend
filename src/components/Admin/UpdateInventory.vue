@@ -2,7 +2,7 @@
   <v-row>
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="grey" text dark v-bind="attrs" v-on="on" class="my-3"> <v-icon>mdi-file-edit-outline</v-icon> Update</v-btn>
+        <v-btn outlined color="blue" dark v-bind="attrs" v-on="on" class="my-3 mx-10"> <v-icon>mdi-file-edit-outline</v-icon> Update</v-btn>
       </template>
       <v-card>
         <v-card-title>
