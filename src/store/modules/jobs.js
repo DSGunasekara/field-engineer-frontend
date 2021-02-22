@@ -112,6 +112,18 @@ const actions = {
         }catch (error){
             return error.response
         }
+    },
+    async updateImages({dispatch}, jobImg){
+        try {
+            axios.defaults.headers.common[
+                "Authorization"
+                ] = `Bearer ${localStorage.getItem("access_token")}`;
+            const response = await axios.patch(`job/updateImgs/${jobImg.id}`, jobImg)
+            dispatch("fetchJobs")
+            return response.status
+        }catch (error){
+            return error.response
+        }
     }
 };
 

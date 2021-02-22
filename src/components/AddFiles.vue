@@ -59,15 +59,10 @@ name: "AddFiles",
         formData.append('id', this.id)
         formData.append('name', this.getProfile.name)
         formData.append('note', this.note)
-
-        // const img = {
-        //   id: this.id,
-        //   jobImg: this.file,
-        //   name: this.getProfile.name,
-        //   note: this.note
-        // }
-        // console.log(formData.getAll('id'))
         await this.uploadImages(formData)
+        this.dialog = false
+        this.file = undefined
+        this.note = ''
       } catch (error) {
         console.log(error)
       }

@@ -56,39 +56,12 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
-    <h1 class="grey--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
-<!--    <v-timeline>-->
-<!--      <v-timeline-item-->
-<!--          v-for="n in 4"-->
-<!--          :key="n"-->
-<!--          large-->
-<!--      >-->
-<!--        <template v-slot:icon>-->
-<!--          <v-avatar>-->
-<!--            <img src="">-->
-<!--          </v-avatar>-->
-<!--        </template>-->
-<!--        <template>-->
-<!--          <span>Tus eu perfecto</span>-->
-<!--        </template>-->
-<!--        <v-card class="elevation-2">-->
-<!--          <v-card-title class="headline">-->
-<!--            Lorem ipsum-->
-<!--          </v-card-title>-->
-<!--          <v-card-text>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</v-card-text>-->
-<!--        </v-card>-->
-<!--      </v-timeline-item>-->
-<!--    </v-timeline>-->
+    <h1 class="teal--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
+    <br>
     <div>
-      <v-btn @click="startJob" v-if="getRole !== 'Admin'" color="green">Start Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
-      <v-btn @click="endJob" v-if="getRole !== 'Admin'" color="red" style="margin-left: 20px">End Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.endTime">Ended Time: {{ jobView.endTime | moment}}</span></b>
-<!--      <v-snackbar top v-model="snackbar">-->
-<!--        {{ text }}-->
-
-<!--        <template v-slot:action="{ attrs }">-->
-<!--          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" :loading="loading">Close</v-btn>-->
-<!--        </template>-->
-<!--      </v-snackbar>-->
+      <v-btn @click="startJob" v-if="getRole !== 'Admin'" outlined color="green">Start Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
+      <v-btn @click="endJob" v-if="getRole !== 'Admin'" outlined color="red" style="margin-left: 20px">End Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.endTime">Ended Time: {{ jobView.endTime | moment}}</span></b>
+      <br><br>
       <v-snackbar top v-model="snackbar">
         {{ text }}
         <template v-slot:action="{ attrs }">
@@ -97,7 +70,39 @@
       </v-snackbar>
     </div>
     <br>
-    <AddFiles v-bind:id="this.$route.params.id"/>
+    <hr>
+    <AddFiles class="my-1" v-bind:id="this.$route.params.id"/>
+    <br>
+
+    <v-layout row wrap>
+      <v-flex
+          xs12
+          sm6
+          md4
+          lg3
+          v-for="doc in jobView.jobImages" :key="doc._id"
+      >
+        <v-card text class="ma-3">
+          <v-card-text>
+            <div class="subheading">
+              User: {{ doc.UserName }}
+            </div>
+            <div class="grey--text">
+              Approval: {{ doc.status }}
+            </div>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn  outlined class="mx-2" style="margin-bottom: 10px" color="#49C6E5" @click="openFile(`http://localhost:5000/${doc.ImageUrl}`)">Get
+                        {{ doc.note }} DOCS</v-btn>
+            <br><br>
+            <div v-if="getRole === 'Admin'">
+              <v-btn outlined color="green" class="my-1 mx-2" @click="approve(doc)"><v-icon>mdi-check</v-icon></v-btn>
+              <v-btn outlined color="red" @click="reject(doc._id)"><v-icon>mdi-close</v-icon></v-btn>
+            </div>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -117,11 +122,12 @@ export default {
       snackbar: false,
       loading: false,
       text: '',
-      note: ''
+      note: '',
+      publicPath: process.env.BASE_URL
     }
   },
   methods:{
-    ...mapActions(["fetchJobs", "updateJob", "fetchUserJobs","fetchReqItems"]),
+    ...mapActions(["fetchJobs", "updateJob", "fetchUserJobs","fetchReqItems", "updateImages"]),
     async startJob(){
       try {
         const time = new Date().toISOString()
@@ -164,6 +170,20 @@ export default {
       }catch (error){
         console.log(error)
       }
+    },
+    async approve(item){
+      const job = {
+        id: item._id,
+        jobId: this.$route.params.id,
+        status: "Approved"
+      }
+      await this.updateImages(job)
+    },
+    async reject(id){
+      console.log(id)
+    },
+    openFile(url){
+      window.open(url)
     }
   },
   computed:{
