@@ -97,7 +97,7 @@
             <br><br>
             <div v-if="getRole === 'Admin'">
               <v-btn outlined color="green" class="my-1 mx-2" @click="approve(doc)"><v-icon>mdi-check</v-icon></v-btn>
-              <v-btn outlined color="red" @click="reject(doc._id)"><v-icon>mdi-close</v-icon></v-btn>
+              <v-btn outlined color="red" @click="reject(doc)"><v-icon>mdi-close</v-icon></v-btn>
             </div>
           </v-card-actions>
         </v-card>
@@ -179,8 +179,13 @@ export default {
       }
       await this.updateImages(job)
     },
-    async reject(id){
-      console.log(id)
+    async reject(item){
+      const job = {
+        id: item._id,
+        jobId: this.$route.params.id,
+        status: "Rejected"
+      }
+      await this.updateImages(job)
     },
     openFile(url){
       window.open(url)
