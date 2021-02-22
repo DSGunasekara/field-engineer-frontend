@@ -91,15 +91,12 @@
               Approval: {{ doc.status }}
             </div>
           </v-card-text>
-          <v-card-actions>
             <v-btn  outlined class="mx-2" style="margin-bottom: 10px" color="#49C6E5" @click="openFile(`https://field-engineer-backend.herokuapp.com/${doc.ImageUrl}`)">Get
                         {{ doc.note }} DOCS</v-btn>
-            <br><br>
             <div v-if="getRole === 'Admin'">
               <v-btn outlined color="green" class="my-1 mx-2" @click="approve(doc)"><v-icon>mdi-check</v-icon></v-btn>
               <v-btn outlined color="red" @click="reject(doc)"><v-icon>mdi-close</v-icon></v-btn>
             </div>
-          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
