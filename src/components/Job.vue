@@ -80,8 +80,8 @@
 <!--      </v-timeline-item>-->
 <!--    </v-timeline>-->
     <div>
-      <v-btn @click="startJob">Start Job</v-btn> <span style="margin-left: 20px" v-if="jobView.startedTime">{{ jobView.startedTime | moment}}</span>
-      <br><br><v-btn @click="endJob">End Job</v-btn><span style="margin-left: 20px" v-if="jobView.endTime">{{ jobView.endTime | moment}}</span>
+      <v-btn @click="startJob" v-if="getRole !== 'Admin'" color="green">Start Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
+      <v-btn @click="endJob" v-if="getRole !== 'Admin'" color="red" style="margin-left: 20px">End Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.endTime">Ended Time: {{ jobView.endTime | moment}}</span></b>
 <!--      <v-snackbar top v-model="snackbar">-->
 <!--        {{ text }}-->
 
@@ -96,22 +96,28 @@
         </template>
       </v-snackbar>
     </div>
-
+    <br>
+    <AddFiles v-bind:id="this.$route.params.id"/>
   </div>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import moment from "moment";
+import AddFiles from "@/components/AddFiles";
 
 export default {
   name: "Job",
+  components: {
+    AddFiles
+  },
   data(){
     return {
       jobs: [],
       snackbar: false,
       loading: false,
-      text: ''
+      text: '',
+      note: ''
     }
   },
   methods:{

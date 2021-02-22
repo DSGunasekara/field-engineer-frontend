@@ -54,7 +54,7 @@
             <div>{{ request.status }}</div>
           </v-flex>
 
-          <v-flex xs6 sm4 md1>
+          <v-flex xs6 sm4 md1 v-if="request.status !== 'Approved'">
             <v-btn text class="grey--text" @click="removeReq(request._id)"
             ><v-icon>mdi-delete</v-icon></v-btn
             >
