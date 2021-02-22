@@ -92,7 +92,7 @@
             </div>
           </v-card-text>
           <v-card-actions>
-            <v-btn  outlined class="mx-2" style="margin-bottom: 10px" color="#49C6E5" @click="openFile(`http://localhost:5000/${doc.ImageUrl}`)">Get
+            <v-btn  outlined class="mx-2" style="margin-bottom: 10px" color="#49C6E5" @click="openFile(`https://field-engineer-backend.herokuapp.com/${doc.ImageUrl}`)">Get
                         {{ doc.note }} DOCS</v-btn>
             <br><br>
             <div v-if="getRole === 'Admin'">
