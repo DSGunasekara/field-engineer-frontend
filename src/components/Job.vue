@@ -65,7 +65,7 @@
       <v-snackbar top v-model="snackbar">
         {{ text }}
         <template v-slot:action="{ attrs }">
-          <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" :loading="loading">Close</v-btn>
+          <v-btn :color="`${msgColor}`" text v-bind="attrs" @click="snackbar = false" :loading="loading">Close</v-btn>
         </template>
       </v-snackbar>
     </div>
@@ -120,7 +120,8 @@ export default {
       loading: false,
       text: '',
       note: '',
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
+      msgColor: ''
     }
   },
   methods:{
@@ -134,14 +135,7 @@ export default {
           setDate: true
         }
         const response = await this.updateJob(job)
-        this.snackbar = true
-        this.loading = false
-        if(response !== 200){
-          this.text = response.data
-          this.snackbar = false
-          return
-        }
-        this.text = "Job Started"
+        this.responseMsg(response, "Job Started")
       }catch (error){
         console.log(error)
       }
@@ -156,14 +150,7 @@ export default {
           setDate: true
         }
         const response = await this.updateJob(job)
-        this.snackbar = true
-        this.loading = false
-        if(response !== 200){
-          this.text = response.data
-          this.snackbar = false
-          return
-        }
-        this.text = "Job Ended"
+        this.responseMsg(response, "Job Ended")
       }catch (error){
         console.log(error)
       }
@@ -174,7 +161,8 @@ export default {
         jobId: this.$route.params.id,
         status: "Approved"
       }
-      await this.updateImages(job)
+      const res = await this.updateImages(job)
+      this.responseMsg(res, "Approved")
     },
     async reject(item){
       const job = {
@@ -182,10 +170,20 @@ export default {
         jobId: this.$route.params.id,
         status: "Rejected"
       }
-      await this.updateImages(job)
+      const res = await this.updateImages(job)
+      this.responseMsg(res, "Rejected")
     },
     openFile(url){
       window.open(url)
+    },
+    responseMsg(response, ok){
+      this.snackbar = true
+      if(response !== 200){
+        this.text = "An error occurred"
+        this.msgColor = "pink"
+      }
+      this.text = ok
+      this.msgColor = "green"
     }
   },
   computed:{

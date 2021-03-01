@@ -1,6 +1,12 @@
 <template>
   <v-container>
     <v-form class="justify-center" ref="form" v-model="valid" lazy-validation>
+      <v-btn text color="pink" @click="adminData">
+        Demo Admin
+      </v-btn>
+      <v-btn text color="purple" @click="engData">
+        Demo Engineer
+      </v-btn>
       <v-text-field
           v-model="email"
           label="Email"
@@ -52,6 +58,14 @@ export default {
   }),
   methods: {
     ...mapActions(["login"]),
+    adminData(){
+      this.email = "admin@gmail.com"
+      this.password = "adsg1997"
+    },
+    engData(){
+      this.email = "adsgunasekara18@gmail.com"
+      this.password = "adsg1997"
+    },
     async submit() {
       const credentials = {
         email: this.email,

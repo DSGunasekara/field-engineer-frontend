@@ -69,6 +69,12 @@
         <v-divider></v-divider>
       </v-card>
     </v-container>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn :color="`${msgColor}`" text v-bind="attrs" @click="snackbar = false" :loading="loading">Close</v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -77,8 +83,12 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
 name: "AdminRequest",
   data:()=>({
+    snackbar: false,
+    loading: false,
+    text: '',
+    msgColor:''
 
-}),
+  }),
   methods:{
     ...mapActions(["fetchRequests", "updateRequest"]),
     async approve(id){
@@ -88,12 +98,7 @@ name: "AdminRequest",
           status: "Approved"
         }
         const res = await this.updateRequest(request)
-        if(res !== 200){
-          return
-        }else {
-          await this.fetchRequests()
-          return
-        }
+        this.responseMsg(res, "Approved")
       }catch (error){
         console.log(error)
       }
@@ -105,15 +110,19 @@ name: "AdminRequest",
           status: "Rejected"
         }
         const res = await this.updateRequest(request)
-        if(res !== 200){
-          return
-        }else {
-          await this.fetchRequests()
-          return
-        }
+        this.responseMsg(res, "Rejected")
       }catch (error){
         console.log(error)
       }
+    },
+    responseMsg(response, ok){
+      this.snackbar = true
+      if(response !== 200){
+        this.text = "An error occurred"
+        this.msgColor = "pink"
+      }
+      this.text = ok
+      this.msgColor = "green"
     }
   },
   computed:{
