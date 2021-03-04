@@ -1,10 +1,10 @@
 <template>
   <v-container class="my-5">
     <h1 class="subheading grey--text">Engineers</h1>
-    <!-- <div v-if="loading == true">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </div> -->
-    <v-layout row wrap>
+<!--    <div v-if="loading == true">-->
+<!--      <v-progress-circular indeterminate color="primary"></v-progress-circular>-->
+<!--    </div>-->
+    <v-layout row wrap v-if="allEngineers.length !== 0">
       <v-flex
         xs12
         sm6
@@ -42,11 +42,12 @@
             </div>
           </v-card-text>
           <v-card-actions>
-
-            <v-btn v-if="getProfile.role === 'Admin'" outlined color="red" @click="deleteEngineer(engineer._id)">
-              <v-icon small left>mdi-delete</v-icon>
-              <span class="">Remove</span>
-            </v-btn>
+            <div v-if="getProfile">
+              <v-btn v-if="getProfile.role === 'Admin'" outlined color="red" @click="deleteEngineer(engineer._id)">
+                <v-icon small left>mdi-delete</v-icon>
+                <span class="">Remove</span>
+              </v-btn>
+            </div>
           </v-card-actions>
         </v-card>
       </v-flex>

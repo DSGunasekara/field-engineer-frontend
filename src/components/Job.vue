@@ -134,7 +134,7 @@ export default {
           this.responseMsg(500, '', 'Job start day error')
           return
         }
-        if(this.jobView.date){
+        if(this.jobView.startedTime){
           this.responseMsg(500, '', 'Job has already started')
           return
         }
