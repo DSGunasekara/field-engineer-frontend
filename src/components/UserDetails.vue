@@ -44,6 +44,16 @@
             <v-icon>mdi-briefcase</v-icon>
             {{ getProfile.role }}
           </v-list-item-title>
+          <v-list-item-title class="ma-2">
+            <v-icon v-if="getProfile.availability === true" small left
+            >mdi-check</v-icon
+            >
+            <v-icon v-else small left>mdi-window-close</v-icon>
+            {{
+              getProfile.availability === true ? "Available" : "Not Available"
+            }}
+            <v-btn outlined x-small class="mx-3" @click="updateStatus">change status</v-btn>
+          </v-list-item-title>
         </div>
       </v-list-item-content>
     </v-list-item>
@@ -56,17 +66,20 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "UserDetails",
   methods: {
-    ...mapActions(["getUser"]),
+    ...mapActions(["getUser", "updateUser"]),
+    async updateStatus(){
+      const user = {
+        id: this.getProfile._id,
+        availability: !this.getProfile.availability
+      }
+      console.log(user)
+      const res = await this.updateUser(user)
+      console.log(res)
+    }
   },
   computed: {
     ...mapGetters(["getProfile"]),
-    // getDetails(){
-    //   if(!this.getProfile){
-    //     return this.getProfile
-    //   }else {
-    //     return this.getProfile
-    //   }
-    // }
+
   },
   async created() {
     try {
