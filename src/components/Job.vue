@@ -16,7 +16,7 @@
       </v-row>
       <v-expansion-panels focusable>
         <v-expansion-panel>
-          <v-expansion-panel-header class="font-weight-bold">Assigned Engineers</v-expansion-panel-header>
+          <v-expansion-panel-header class="font-weight-bold">Assigned Engineers<v-btn>add</v-btn></v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="ml-5" v-for="engineer in jobView.assignedEngineers" :key="engineer._id">
               <v-col><v-icon>mdi-face</v-icon> {{ engineer.name }}</v-col>
