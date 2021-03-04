@@ -16,13 +16,14 @@
       </v-row>
       <v-expansion-panels focusable>
         <v-expansion-panel>
-          <v-expansion-panel-header class="font-weight-bold">Assigned Engineers<v-btn>add</v-btn></v-expansion-panel-header>
+          <v-expansion-panel-header class="font-weight-bold">Assigned Engineers</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row class="ml-5" v-for="engineer in jobView.assignedEngineers" :key="engineer._id">
-              <v-col><v-icon>mdi-face</v-icon> {{ engineer.name }}</v-col>
-              <v-col><v-icon>mdi-email</v-icon> {{ engineer.email }}</v-col>
-              <v-col><v-icon>mdi-cellphone-android</v-icon>{{ engineer.contactNo }}</v-col>
-              <v-col><v-icon>mdi-star</v-icon>{{ engineer.rate }}</v-col>
+            <v-row class="ml-4" v-for="engineer in jobView.assignedEngineers" :key="engineer._id">
+              <v-col style="margin-left: -30px"><v-icon>mdi-face</v-icon> {{ engineer.name }}</v-col>
+              <v-col style="margin-left: -30px"><v-icon>mdi-email</v-icon> {{ engineer.email }}</v-col>
+              <v-col ><v-icon>mdi-cellphone-android</v-icon>{{ engineer.contactNo }}</v-col>
+              <v-col style="margin-left: -30px"><v-icon>mdi-star</v-icon>{{ engineer.rate }}</v-col>
+<!--              <v-col><v-btn><v-icon>mdi-star</v-icon></v-btn></v-col>-->
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -59,7 +60,7 @@
     <h1 class="teal--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
     <br>
     <div>
-      <v-btn @click="startJob" v-if="getRole !== 'Admin'" outlined color="green">Start Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
+      <v-btn @click="startJob" v-if="getRole !== 'Admin'" outlined color="green" >Start Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
       <v-btn @click="endJob" v-if="getRole !== 'Admin'" outlined color="red" style="margin-left: 20px">End Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.endTime">Ended Time: {{ jobView.endTime | moment}}</span></b>
       <br><br>
       <v-snackbar top v-model="snackbar">
@@ -129,11 +130,21 @@ export default {
     async startJob(){
       try {
         const time = new Date().toISOString()
+        if(time.split('T')[0] !== this.jobView.date.split('T')[0]){
+          this.responseMsg(500, '', 'Job start day error')
+          return
+        }
+        if(this.jobView.date){
+          this.responseMsg(500, '', 'Job has already started')
+          return
+        }
+
         const job = {
           id: this.$route.params.id,
           startedTime: time,
           setDate: true
         }
+        console.log()
         const response = await this.updateJob(job)
         this.responseMsg(response, "Job Started")
       }catch (error){
@@ -176,11 +187,13 @@ export default {
     openFile(url){
       window.open(url)
     },
-    responseMsg(response, ok){
+    responseMsg(response, ok, er){
+      er = er || "An error occurred"
       this.snackbar = true
       if(response !== 200){
-        this.text = "An error occurred"
+        this.text = er
         this.msgColor = "pink"
+        return
       }
       this.text = ok
       this.msgColor = "green"

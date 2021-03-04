@@ -66,7 +66,7 @@
             <!-- <v-btn text class="grey--text">
               <v-icon>mdi-file-edit-outline</v-icon> edit</v-btn
             > -->
-            <UpdateJob class="mx-2" v-bind:job="job" />
+            <UpdateJob class="mx-2 my-n2" v-bind:job="job" />
           </v-flex>
           <v-flex xs6 sm4 md1>
             <v-btn outlined color="red" class="mx-1" @click="removeJob(job._id)"
