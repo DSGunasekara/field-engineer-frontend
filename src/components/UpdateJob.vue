@@ -119,7 +119,6 @@ export default {
       try {
         const response = await this.updateJob(job);
         this.loading = true
-        console.log(response)
         if(response !== 200){
           this.snackbar = true
           this.text = "An Error occurred"
