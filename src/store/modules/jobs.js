@@ -24,12 +24,12 @@ const actions = {
             return error.response
         }
     },
-    async rejectJob({dispatch}, jobId){
+    async rejectJob({dispatch}, job){
       try {
           axios.defaults.headers.common[
               "Authorization"
               ] = `Bearer ${localStorage.getItem("access_token")}`;
-          const response = await axios.patch(`job/removeEngineer/${jobId}`)
+          const response = await axios.patch(`job/removeEngineer/${job.job}`, {...job})
           dispatch("fetchJobs")
           return response.status
       }  catch (error){

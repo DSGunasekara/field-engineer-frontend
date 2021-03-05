@@ -82,7 +82,12 @@ export default {
     },
     async removeJob(jobId){
       try {
-        const response = await this.rejectJob(jobId)
+        const job = {
+          job: jobId,
+          user: this.getProfile._id
+        }
+        // const response = await this.rejectJob(jobId, this.getProfile._id)
+        const response = await this.rejectJob(job)
         if(response !== 200){
           this.loading = false
           this.snackbar = true

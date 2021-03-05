@@ -23,7 +23,7 @@
               <v-col><v-icon>mdi-email</v-icon> {{ engineer.email }}</v-col>
               <v-col><v-icon>mdi-cellphone-android</v-icon>{{ engineer.contactNo }}</v-col>
               <v-col><v-icon>mdi-star</v-icon>{{ engineer.rate }}</v-col>
-              <v-col><v-btn plain small @click="removeJob"><v-icon color="red">mdi-delete</v-icon></v-btn></v-col>
+              <v-col v-if="getProfile.role === 'Admin' "><v-btn plain small @click="removeJob(engineer._id)"><v-icon color="red">mdi-delete</v-icon></v-btn></v-col>
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -60,8 +60,12 @@
     <h1 class="teal--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
     <br>
     <div>
-      <v-btn @click="startJob" v-if="getRole !== 'Admin'" outlined color="green" >Start Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
-      <v-btn @click="endJob" v-if="getRole !== 'Admin'" outlined color="red" style="margin-left: 20px">End Job</v-btn><b><span style="margin-left: 20px" v-if="jobView.endTime">Ended Time: {{ jobView.endTime | moment}}</span></b>
+      <v-btn @click="startJob" v-if="getRole !== 'Admin'"
+             outlined color="green" >Start Job</v-btn>
+      <b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
+      <v-btn @click="endJob" v-if="getRole !== 'Admin'"
+             outlined color="red" style="margin-left: 20px">End Job</v-btn>
+      <b><span style="margin-left: 20px" v-if="jobView.endTime">Ended Time: {{ jobView.endTime | moment}}</span></b>
       <br><br>
       <v-snackbar top v-model="snackbar">
         {{ text }}
@@ -126,7 +130,16 @@ export default {
     }
   },
   methods:{
-    ...mapActions(["fetchJobs", "updateJob", "fetchUserJobs","fetchReqItems", "updateImages"]),
+    ...mapActions(["fetchJobs", "updateJob", "fetchUserJobs","fetchReqItems", "updateImages", "rejectJob"]),
+    async removeJob(userId){
+      const job = {
+        job:this.$route.params.id,
+        user: userId
+      }
+      
+      const res = await this.rejectJob(job)
+      this.responseMsg(res, "Engineer removed")
+    },
     async startJob(){
       try {
         const time = new Date().toISOString()
