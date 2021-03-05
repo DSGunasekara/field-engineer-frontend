@@ -3,6 +3,7 @@ import { Pie } from 'vue-chartjs'
 
 export default {
   extends: Pie,
+  props:['nos'],
   data () {
     return {
       chartData: {
@@ -21,7 +22,7 @@ export default {
             'rgba(255, 206, 86, 0.2)',
             'rgba(75, 192, 192, 0.2)',
           ],
-          data: [1000,	500,	1500,	1000]
+          data: this.nos
         }]
       },
       options: {

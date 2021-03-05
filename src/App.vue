@@ -22,9 +22,10 @@ export default {
     //
   }),
   methods:{
-    ...mapActions(['fetchEngineers', 'fetchRequests', 'fetchJobs', 'fetchItems'])
+    ...mapActions(['fetchEngineers', 'fetchRequests', 'fetchJobs', 'fetchItems', 'getUser'])
   },
   async created() {
+    await this.getUser()
     await this.fetchEngineers()
     await this.fetchItems()
     await this.fetchJobs()

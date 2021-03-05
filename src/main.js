@@ -17,11 +17,11 @@ router.beforeEach((to, from, next) => {
       } else next();
     } else if (to.matched.some((record) => record.meta.requireVisitors)) {
       if (store.getters.isLoggedIn) {
-        next({ name: "jobs" });
+        next({ name: "home" });
       } else next();
     }else if (to.matched.some((record) => record.meta.requireAdmin)) {
       if (store.getters.getProfile.role !== "Admin") {
-        next({ name: "jobs" });
+        next({ name: "home" });
       } else next();
     }
     next();
