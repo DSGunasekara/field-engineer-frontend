@@ -14,6 +14,16 @@
         <v-col class="ml-5" cols="auto">Description: </v-col>
         <v-col cols="auto" class="font-weight-bold">{{ jobView.description }}</v-col>
       </v-row>
+      <v-row>
+        <v-col class="ml-5" cols="auto">No of Engineers: </v-col>
+        <v-col cols="auto" class="font-weight-bold">
+          {{ jobView.assignedEngineers.length }}/{{ jobView.requiredEngineers }}
+        </v-col>
+      </v-row>
+      <v-row v-if="getProfile.role === 'Admin'">
+        <v-col class="ml-5" cols="auto">Add an Engineer: </v-col>
+        <v-col class="font-weight-bold" cols="auto"><AddEngToJob :job="jobView._id"/></v-col>
+      </v-row>
       <v-expansion-panels focusable>
         <v-expansion-panel>
           <v-expansion-panel-header class="font-weight-bold">Assigned Engineers</v-expansion-panel-header>
@@ -112,10 +122,12 @@
 import {mapActions, mapGetters} from 'vuex'
 import moment from "moment";
 import AddFiles from "@/components/AddFiles";
+import AddEngToJob from "@/components/Admin/AddEngToJob";
 
 export default {
   name: "Job",
   components: {
+    AddEngToJob,
     AddFiles
   },
   data(){
@@ -136,7 +148,7 @@ export default {
         job:this.$route.params.id,
         user: userId
       }
-      
+
       const res = await this.rejectJob(job)
       this.responseMsg(res, "Engineer removed")
     },
