@@ -49,6 +49,7 @@ const routes = [
     name: "engineers",
     component: Engineers,
     meta: {
+      requireAuth:true,
       requireAdmin:true,
     },
   },

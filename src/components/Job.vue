@@ -19,11 +19,11 @@
           <v-expansion-panel-header class="font-weight-bold">Assigned Engineers</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="ml-4" v-for="engineer in jobView.assignedEngineers" :key="engineer._id">
-              <v-col style="margin-left: -30px"><v-icon>mdi-face</v-icon> {{ engineer.name }}</v-col>
-              <v-col style="margin-left: -30px"><v-icon>mdi-email</v-icon> {{ engineer.email }}</v-col>
-              <v-col ><v-icon>mdi-cellphone-android</v-icon>{{ engineer.contactNo }}</v-col>
-              <v-col style="margin-left: -30px"><v-icon>mdi-star</v-icon>{{ engineer.rate }}</v-col>
-<!--              <v-col><v-btn><v-icon>mdi-star</v-icon></v-btn></v-col>-->
+              <v-col><v-icon>mdi-face</v-icon> {{ engineer.name }}</v-col>
+              <v-col><v-icon>mdi-email</v-icon> {{ engineer.email }}</v-col>
+              <v-col><v-icon>mdi-cellphone-android</v-icon>{{ engineer.contactNo }}</v-col>
+              <v-col><v-icon>mdi-star</v-icon>{{ engineer.rate }}</v-col>
+              <v-col><v-btn plain small @click="removeJob"><v-icon color="red">mdi-delete</v-icon></v-btn></v-col>
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -130,19 +130,22 @@ export default {
     async startJob(){
       try {
         const time = new Date().toISOString()
-        if(time.split('T')[0] !== this.jobView.date.split('T')[0]){
-          this.responseMsg(500, '', 'Job start day error')
-          return
-        }
+
         if(this.jobView.startedTime){
           this.responseMsg(500, '', 'Job has already started')
+          return
+        }
+
+        if(time.split('T')[0] !== this.jobView.date.split('T')[0]){
+          this.responseMsg(500, '', 'Job start day error')
           return
         }
 
         const job = {
           id: this.$route.params.id,
           startedTime: time,
-          setDate: true
+          setDate: true,
+          status: "Started"
         }
         console.log()
         const response = await this.updateJob(job)
