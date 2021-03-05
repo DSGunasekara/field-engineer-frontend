@@ -11,7 +11,8 @@
     </v-row>
     <v-row>
       <v-col>
-        <h2 class="font-weight-light">Pending Requests: {{ getUserReqs.length }}</h2>
+        <h2 v-if="getProfile.role !== 'Admin' " class="font-weight-light">Pending Requests: {{ getUserReqs.length }}</h2>
+        <h2 v-if="getProfile.role === 'Admin' " class="font-weight-light">Pending Requests: {{ getPendingReqs.length }}</h2>
       </v-col>
     </v-row>
   </div>
@@ -32,24 +33,36 @@ name: "Dashboard",
     }
   },
   methods:{
-    ...mapActions(["fetchUserJobs", "fetchRequests"]),
+    ...mapActions(["fetchUserJobs", "fetchRequests", "fetchJobs"]),
     getPieData(){
-      this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Pending").length)
-      this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Started").length)
-      this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Reschedule").length)
-      this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Completed").length)
+      if(this.getProfile.role !== "Admin"){
+        this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Pending").length)
+        this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Started").length)
+        this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Reschedule").length)
+        this.pieData.push(this.getUserJobs.jobHistory.filter(job=>job.status === "Done").length)
+      }else{
+        this.pieData.push(this.allJobs.filter(job=>job.status === "Pending").length)
+        this.pieData.push(this.allJobs.filter(job=>job.status === "Started").length)
+        this.pieData.push(this.allJobs.filter(job=>job.status === "Reschedule").length)
+        this.pieData.push(this.allJobs.filter(job=>job.status === "Done").length)
+      }
+
     }
   },
   computed: {
-    ...mapGetters(["getUserJobs", "getProfile", "allRequests"]),
+    ...mapGetters(["getUserJobs", "getProfile", "allRequests", "allJobs"]),
     getUserReqs(){
       return this.allRequests.filter(req=> req.requestedUser._id === this.getProfile._id & req.status === "Pending")
+    },
+    getPendingReqs(){
+      return this.allRequests.filter(req=> req.status === "Pending")
     }
   },
   async created() {
     await this.fetchUserJobs(this.getProfile._id)
     this.getPieData()
     await this.fetchRequests()
+    await this.fetchJobs()
   }
 }
 </script>
