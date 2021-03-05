@@ -8,6 +8,7 @@ import ProfileUpdate from "@/views/ProfileUpdate";
 import Job from "@/components/Job";
 import AdminInventory from "@/components/Admin/AdminInventory";
 import Request from "@/components/Request";
+import Dashboard from "@/views/Dashboard";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
+    component: Dashboard,
     meta: {
       requireAuth: true,
     },
