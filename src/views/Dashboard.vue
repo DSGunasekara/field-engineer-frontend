@@ -60,9 +60,9 @@ name: "Dashboard",
   },
   async created() {
     await this.fetchUserJobs(this.getProfile._id)
-    this.getPieData()
     await this.fetchRequests()
     await this.fetchJobs()
+    this.getPieData()
   }
 }
 </script>

@@ -18,10 +18,10 @@
                 <v-text-field v-model="category" label="Category" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="qty" label="Quantity" type="number" required></v-text-field>
+                <v-text-field v-model="price" label="Serial Number" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field v-model="price" label="Price" type="number" required></v-text-field>
+                <v-text-field v-model="qty" label="Quantity" type="number" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field v-model="location" label="Location"></v-text-field>

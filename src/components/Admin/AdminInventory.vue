@@ -29,6 +29,10 @@
 
       <v-card text v-for="(item, index) in allItems" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2`">
+          <v-flex xs6 sm4 md2>
+            <div class="caption grey--text">Serial Number</div>
+            <div> {{ item.price }}</div>
+          </v-flex>
           <v-flex xs12 md2>
             <div class="caption grey--text">Item</div>
             <div>{{ item.itemName }}</div>
@@ -42,10 +46,6 @@
           <v-flex xs6 sm4 md1>
             <div class="caption grey--text">Quantity</div>
             <div>{{ item.qty}}</div>
-          </v-flex>
-          <v-flex xs6 sm4 md2>
-            <div class="caption grey--text">Price</div>
-            <div> Rs:{{ item.price }}</div>
           </v-flex>
           <v-flex xs6 sm4 md2>
             <div class="caption grey--text">Location</div>
