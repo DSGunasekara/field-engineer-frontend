@@ -48,9 +48,14 @@ name: "Dashboard",
       }
     },
     getLineData(){
+      let newDate = new Date().toISOString();
       if(this.getUserData.role !== "Admin"){
-        let newDate = new Date().toISOString();
         let yearlyJobs = this.getUserJobs.jobHistory.filter(job=>job.status === "Done" & job.date.substr(0,4) === newDate.substr(0,4) )
+        for (let i = 0; i < 12; i++) {
+          this.lineData.push(yearlyJobs.filter(job => job.date.substr(5,2) == i+1).length)
+        }
+      }else if(this.getUserData.role === "Admin"){
+        let yearlyJobs = this.allJobs.filter(job=>job.status === "Done" & job.date.substr(0,4) === newDate.substr(0,4) )
         for (let i = 0; i < 12; i++) {
           this.lineData.push(yearlyJobs.filter(job => job.date.substr(5,2) == i+1).length)
         }
