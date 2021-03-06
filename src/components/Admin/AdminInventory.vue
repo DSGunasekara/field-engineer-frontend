@@ -26,8 +26,11 @@
           <span>Sort by project author</span>
         </v-tooltip>
       </v-layout>
-
-      <v-card text v-for="(item, index) in allItems" :key="index" style="margin-top: 15px">
+<!--      Search    -->
+      <div class="search-wrapper">
+        <v-text-field type="text" v-model="search" placeholder="Search by Serial Number or Item Name"/>
+      </div>
+      <v-card text v-for="(item, index) in filteredList" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2`">
           <v-flex xs6 sm4 md2>
             <div class="caption grey--text">Serial Number</div>
@@ -84,6 +87,11 @@ export default {
     AddRequest,
     UpdateInventory
   },
+  data(){
+    return{
+      search: ''
+    }
+  },
   methods:{
     ...mapActions(["fetchItems", "removeItem"]),
     async deleteItem(itemId){
@@ -102,6 +110,9 @@ export default {
       }else{
         return this.getProfile.role
       }
+    },
+    filteredList() {
+      return this.allItems.filter(item => item.price.toLowerCase().includes(this.search.toLowerCase()) || item.itemName.toLowerCase().includes(this.search.toLowerCase()))
     }
   },
   async created(){
