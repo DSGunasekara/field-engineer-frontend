@@ -5,30 +5,10 @@
       <h1 class="subheading teal--text">Inventory</h1>
       <AddItem v-if="getRole === 'Admin'"/>
       <!-- TODO: make this a modal  -->
-      <v-layout row justify-start class="mb-3">
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn small text color="grey" @click="sortBy('title')" v-on="on">
-              <v-icon small left>mdi-folder</v-icon>
-              <span class="caption text-lowercase">By project name</span>
-            </v-btn>
-          </template>
-          <span>Sort by project name</span>
-        </v-tooltip>
 
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn small text color="grey" @click="sortBy('due')" v-on="on">
-              <v-icon small left>mdi-account-group</v-icon>
-              <span class="caption text-lowercase">By Person</span>
-            </v-btn>
-          </template>
-          <span>Sort by project author</span>
-        </v-tooltip>
-      </v-layout>
 <!--      Search    -->
       <div class="search-wrapper">
-        <v-text-field type="text" v-model="search" placeholder="Search by Serial Number or Item Name"/>
+        <v-text-field type="text" v-model="search" placeholder="Search Items"/>
       </div>
       <v-card text v-for="(item, index) in filteredList" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2`">
@@ -112,7 +92,8 @@ export default {
       }
     },
     filteredList() {
-      return this.allItems.filter(item => item.price.toLowerCase().includes(this.search.toLowerCase()) || item.itemName.toLowerCase().includes(this.search.toLowerCase()))
+      return this.allItems.filter(item => item.price.toLowerCase().includes(this.search.toLowerCase()) || item.itemName.toLowerCase().includes(this.search.toLowerCase())
+          || item.category.toLowerCase().includes(this.search.toLowerCase()) || item.inventoryLocation.toLowerCase().includes(this.search.toLowerCase()))
     }
   },
   async created(){
