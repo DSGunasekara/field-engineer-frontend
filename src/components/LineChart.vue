@@ -3,6 +3,7 @@ import { Line } from 'vue-chartjs'
 
 export default {
   extends: Line,
+  props:['nos'],
   data () {
     return {
       chartData: {
@@ -10,7 +11,7 @@ export default {
         datasets: [
           {
             label: 'Completed Jobs',
-            data: [3,	2,	5,	8,	4,	2,	6,	1,	9, 5, 7, 5, 3],
+            data: this.nos,
             fill: false,
             borderColor: 'teal',
             backgroundColor: 'teal',

@@ -6,7 +6,7 @@
         <PieChart v-if="pieData.length !== 0" :nos="pieData"/>
       </v-col>
       <v-col>
-        <line-chart/>
+        <line-chart v-if="lineData.length !==0" :nos="lineData"/>
       </v-col>
     </v-row>
     <v-row>
@@ -46,7 +46,15 @@ name: "Dashboard",
         this.pieData.push(this.allJobs.filter(job=>job.status === "Reschedule").length)
         this.pieData.push(this.allJobs.filter(job=>job.status === "Done").length)
       }
-
+    },
+    getLineData(){
+      if(this.getUserData.role !== "Admin"){
+        let newDate = new Date().toISOString();
+        let yearlyJobs = this.getUserJobs.jobHistory.filter(job=>job.status === "Done" & job.date.substr(0,4) === newDate.substr(0,4) )
+        for (let i = 0; i < 12; i++) {
+          this.lineData.push(yearlyJobs.filter(job => job.date.substr(5,2) == i+1).length)
+        }
+      }
     }
   },
   computed: {
@@ -64,6 +72,7 @@ name: "Dashboard",
     await this.fetchUserJobs(this.getUserData.id)
     await this.fetchRequests()
     await this.getPieData()
+    await this.getLineData()
   },
   async created() {
 
