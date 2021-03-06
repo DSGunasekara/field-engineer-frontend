@@ -10,7 +10,7 @@
         FE Manager
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <h3 class="mx-10 overline" style="color: teal">Hello, {{ getProfile.name }}</h3>
+      <h3 v-if="getProfile" class="mx-10 overline" style="color: teal">Hello, {{ getProfile.name }}</h3>
        <Logout v-if="isLoggedIn"/>
     </v-toolbar>
 

@@ -9,7 +9,7 @@
 
 <script>
 import Navbar from "./components/Layouts/Navabar";
-import { mapActions } from "vuex";
+// import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -22,14 +22,14 @@ export default {
     //
   }),
   methods:{
-    ...mapActions(['fetchEngineers', 'fetchRequests', 'fetchJobs', 'fetchItems', 'getUser'])
+    // ...mapActions(['fetchEngineers', 'fetchRequests', 'fetchJobs', 'fetchItems', 'getUser'])
   },
   async created() {
-    await this.getUser()
-    await this.fetchEngineers()
-    await this.fetchItems()
-    await this.fetchJobs()
-    await this.fetchRequests()
+    // await this.getUser()
+    // await this.fetchEngineers()
+    // await this.fetchItems()
+    // await this.fetchJobs()
+    // await this.fetchRequests()
   }
 };
 </script>

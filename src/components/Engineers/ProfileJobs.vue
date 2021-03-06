@@ -2,7 +2,7 @@
   <div class="dashboard">
     <v-container class="my-5">
       <br>
-      <h2 v-if="this.getProfile.role !== 'Admin'" class="subheading teal--text">Your Job List</h2>
+      <h2 v-if="this.getUserData.role !== 'Admin'" class="subheading teal--text">Your Job List</h2>
       <v-card text v-for="(job, index) in getUserJobs.jobHistory" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2 ${job.status}`">
           <v-flex xs12 md2>
@@ -97,20 +97,20 @@ export default {
         this.loading = false
         this.snackbar = true
         this.text = "Removed from the job"
-        await this.fetchUserJobs(this.getProfile._id)
+        await this.fetchUserJobs(this.getUserData.id)
       }catch (error){
         console.log(error)
       }
     },
     async getData(){
-      await this.fetchUserJobs(this.getProfile._id)
+      await this.fetchUserJobs(this.getUserData.id)
     }
   },
   async created() {
     await this.getData()
   },
   computed:{
-    ...mapGetters(["getUserJobs", "getProfile"])
+    ...mapGetters(["getUserJobs", "getProfile", "getUserData"])
   },
   filters: {
     moment: function (date) {

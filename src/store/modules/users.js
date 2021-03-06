@@ -10,6 +10,7 @@ const state = {
 const getters = {
     isLoggedIn: (state) => state.token !== null,
     getProfile: (state) => state.profile,
+    getUserData: (state) => state.user,
     allEngineers: (state) => state.engineers,
 };
 
@@ -65,7 +66,7 @@ const actions = {
 
             const response = await axios.get("login")
             commit("setUser", { ...response.data });
-            dispatch("getProfile", response.data.id);
+            dispatch("getProfileData", response.data.id);
             return response.status
         }catch (error) {
             console.log(`Get User ${error}`)
@@ -86,7 +87,7 @@ const actions = {
           return error.response
       }
     },
-    async getProfile({commit}, userId){
+    async getProfileData({commit}, userId){
         try {
             axios.defaults.headers.common[
                 "Authorization"
