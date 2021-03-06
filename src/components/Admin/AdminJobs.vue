@@ -54,18 +54,12 @@
 
           <v-flex xs2 sm4 md1>
             <div class="right ml-5">
-              <v-chip small :class="`white--text my-2 caption ${job.status}`">{{
+              <v-chip small :class="`${job.status} white--text my-2 caption`"  :color="`${job.status === 'Done'? Done: Pending}`">{{
                 job.status
               }}</v-chip>
-              <!-- <div :class="`${job.status}`">
-                {{ job.status }}
-              </div> -->
             </div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <!-- <v-btn text class="grey--text">
-              <v-icon>mdi-file-edit-outline</v-icon> edit</v-btn
-            > -->
             <UpdateJob class="mx-2 my-n2" v-bind:job="job" />
           </v-flex>
           <v-flex xs6 sm4 md1>
@@ -97,6 +91,12 @@ export default {
   components: {
     AddJob,
     UpdateJob,
+  },
+  data(){
+    return {
+      Done: '#3cd150',
+      Pending: '#ffaa2c'
+    }
   },
   methods: {
     ...mapActions(["fetchJobs", "deleteJob"]),
@@ -153,16 +153,19 @@ export default {
 .project.Pending {
   border-left: 4px solid #ffaa2c;
 }
-.project.overdue {
+.project.Resheduled {
   border-left: 4px solid #f83e70;
 }
 .v-chip.Assigned {
   background: #3cd1c2;
 }
+.v-chip.Done {
+  background: #3cd150;
+}
 .v-chip.Pending {
   background: #ffaa2c;
 }
-.v-chip.overdue {
+.v-chip.Resheduled {
   background: #f83e70;
 }
 </style>
