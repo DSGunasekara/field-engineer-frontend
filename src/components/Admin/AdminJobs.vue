@@ -153,7 +153,7 @@ export default {
 .project.Pending {
   border-left: 4px solid #ffaa2c;
 }
-.project.Resheduled {
+.project.Reschedule {
   border-left: 4px solid #f83e70;
 }
 .v-chip.Assigned {
@@ -165,7 +165,7 @@ export default {
 .v-chip.Pending {
   background: #ffaa2c;
 }
-.v-chip.Resheduled {
+.v-chip.Reschedule {
   background: #f83e70;
 }
 </style>
