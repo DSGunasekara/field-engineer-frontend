@@ -72,7 +72,7 @@ name: "Reports",
       margin: { top: 40 },
     })
     doc.save(
-        `Engineer Report `);
+        `Engineer Report-${this.picker}`);
     },
     downInventory(){
       let data = this.acceptedReqs.map((item)=>{
@@ -113,7 +113,7 @@ name: "Reports",
         margin: { top: 40 },
       })
       doc.save(
-          `Inventory Report `);
+          `Inventory Report-${this.picker} `);
     }
   },
   computed:{
