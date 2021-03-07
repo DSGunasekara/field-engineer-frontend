@@ -2,27 +2,27 @@
   <div class="dashboard">
     <v-container class="my-5">
       <h1 class="subheading teal--text">Jobs</h1>
-      <v-layout row justify-start class="mb-3">
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn small text color="grey" @click="sortBy('title')" v-on="on">
-              <v-icon small left>mdi-folder</v-icon>
-              <span class="caption text-lowercase">By project name</span>
-            </v-btn>
-          </template>
-          <span>Sort by project name</span>
-        </v-tooltip>
+<!--      <v-layout row justify-start class="mb-3">-->
+<!--        <v-tooltip top>-->
+<!--          <template v-slot:activator="{ on }">-->
+<!--            <v-btn small text color="grey" @click="sortBy('title')" v-on="on">-->
+<!--              <v-icon small left>mdi-folder</v-icon>-->
+<!--              <span class="caption text-lowercase">By Job Title</span>-->
+<!--            </v-btn>-->
+<!--          </template>-->
+<!--          <span>Sort by Job Title</span>-->
+<!--        </v-tooltip>-->
 
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn small text color="grey" @click="sortBy('due')" v-on="on">
-              <v-icon small left>mdi-account-group</v-icon>
-              <span class="caption text-lowercase">By Person</span>
-            </v-btn>
-          </template>
-          <span>Sort by project author</span>
-        </v-tooltip>
-      </v-layout>
+<!--        <v-tooltip top>-->
+<!--          <template v-slot:activator="{ on }">-->
+<!--            <v-btn small text color="grey" @click="sortBy('date')" v-on="on">-->
+<!--              <v-icon small left>mdi-account-group</v-icon>-->
+<!--              <span class="caption text-lowercase">By Date</span>-->
+<!--            </v-btn>-->
+<!--          </template>-->
+<!--          <span>Sort by Date</span>-->
+<!--        </v-tooltip>-->
+<!--      </v-layout>-->
 
       <v-card text v-for="(job, index) in availableJobs" :key="index" style="margin-top: 15px">
         <v-layout row wrap :class="`pa-3 project ml-2 ${job.status}`">
@@ -92,17 +92,18 @@ export default {
       loading: false,
       text: '',
       Done: '#3cd150',
-      Pending: '#ffaa2c'
+      Pending: '#ffaa2c',
     };
   },
   methods: {
     ...mapActions(["fetchJobs", "acceptJob"]),
-    sortBy(prop) {
-      //TODO: starting need to updated
-      this.projects = this.projects.sort((a, b) =>
-        a[prop] < b[prop] ? -1 : 1
-      );
-    },
+    // sortBy(prop) {
+    //   // this.availableJobs = this.availableJobs.sort((a, b) =>
+    //   //     a[prop] < b[prop] ? -1 : 1
+    //   // );
+    //   console.log(this.availableJobs)
+    //   console.log(prop)
+    // },
     async joinJob(jobId){
       this.loading =  true
       const newJob = {

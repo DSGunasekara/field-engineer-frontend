@@ -50,7 +50,7 @@ name: "Reports",
     doc.text('FE Manger Platform', 35, 10);
     // doc.text('-----------------------------------------', 35, 15)
     doc.text(
-        `Engineer Activity Report ${new Date().toISOString().substr(0, 7) }`,
+        `Engineer Activity Report Date: ${new Date().toISOString().substr(0, 7) }`,
         35,
         20
     );
@@ -63,9 +63,9 @@ name: "Reports",
       head: [
         [
           "Engineer",
-          "No Of Total Jobs",
+          "No of Total Jobs",
           "No of Pending Jobs",
-          "No Of Completed Jobs",
+          "No of Completed Jobs",
         ],
       ],
       body: data,
@@ -89,7 +89,7 @@ name: "Reports",
       doc.text('FE Manger Platform', 35, 10);
       // doc.text('-----------------------------------------', 35, 15)
       doc.text(
-          `Inventory Report ${new Date().toISOString().substr(0,7) }`,
+          `Inventory Report Date: ${new Date().toISOString().substr(0,7) }`,
           35,
           20
       );
