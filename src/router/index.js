@@ -15,7 +15,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Dashboard,
     meta: {
       requireAuth: true,
@@ -26,7 +26,7 @@ const routes = [
     name: "jobs",
     component: Jobs,
     meta: {
-      requireAuth: true,
+      requireCustomer: true,
     },
   },
   {
@@ -51,7 +51,6 @@ const routes = [
     name: "engineers",
     component: Engineers,
     meta: {
-      requireAuth:true,
       requireAdmin:true,
     },
   },
@@ -60,7 +59,7 @@ const routes = [
     name: "inventory",
     component: AdminInventory,
     meta: {
-      requireAuth:true,
+      requireCustomer:true,
     },
   },
   {
@@ -68,7 +67,7 @@ const routes = [
     name: "requests",
     component: Request,
     meta: {
-      requireAuth:true,
+      requireCustomer:true,
     },
   },
   {

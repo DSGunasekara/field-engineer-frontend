@@ -117,7 +117,7 @@ export default {
   data() {
     return {
       valid: true,
-      roles: ["Engineer", "Admin"],
+      roles: ["Engineer", "Admin", "Customer"],
       name: "",
       email: "",
       passportNo: "",

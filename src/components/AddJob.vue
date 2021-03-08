@@ -26,26 +26,27 @@
               <v-col cols="12">
                 <v-text-field v-model="description" label="Description" required></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-text-field v-model="lconName" label="Customer Name"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field v-model="lconContactNo" label="Customer Contact No"></v-text-field>
-              </v-col>
+<!--              <v-col cols="12">-->
+<!--                <v-text-field v-model="lconName" label="Customer Name"></v-text-field>-->
+<!--              </v-col>-->
+<!--              <v-col cols="12">-->
+<!--                <v-text-field v-model="lconContactNo" label="Customer Contact No"></v-text-field>-->
+<!--              </v-col>-->
               <v-col cols="12" md="6">
                 <v-text-field v-model="rate" label="Rate per Hour"></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field v-model="requiredEngineers" label="Required no of engineers"></v-text-field>
               </v-col>
-              <!-- <v-col cols="12">
+              <v-col cols="12">
                 <v-select
+                  required
                   :menu-props="{ offsetY: true }"
-                  :items="items"
-                  label="Select Engineers to assign"
-                  multiple
+                  :items="cusNames"
+                  label="Select customer to assign"
+                  v-model="customer"
                 ></v-select>
-              </v-col> -->
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -64,8 +65,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-// import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "AddJob",
@@ -80,24 +80,29 @@ export default {
     lconName:'',
     lconContactNo:'',
     rate:'',
-    requiredEngineers:''
+    requiredEngineers:'',
+    cusNames: [],
+    customer:'',
   }),
   methods: {
-    ...mapActions(["addJob"]),
+    ...mapActions(["addJob", "fetchCustomers"]),
     async submit(){
       console.log(this.addJob);
+      let selectedCus = this.getCustomers.filter(cus=> cus.name === this.customer)[0]
       const job = {
         title: this.title,
         date: this.date,
         // startTime: this.startTime,
         location: this.location,
         description: this.description,
-        lconName: this.lconName,
-        lconContactNo: this.lconContactNo,
+        lconName: selectedCus.name,
+        lconContactNo: selectedCus.contactNo,
         rate: this.rate,
         requiredEngineers: this.requiredEngineers,
-        status: 'Pending'
+        status: 'Pending',
+        customer: selectedCus._id
       }
+      console.log(job)
       try {
         const response = await this.addJob(job);
         if(response !== 200){
@@ -109,13 +114,12 @@ export default {
       }
     }
   },
-  // computed:{
-  //   ...mapGetters(["allEngineers"]),
-  //   items(){
-  //     const items = this.allEngineers.filter(engineer=> engineer.availability === true).map(engineer=> engineer.user.name)
-  //     console.log(items);
-  //     return items
-  //   }
-  // }
+  computed:{
+    ...mapGetters(["getCustomers"])
+  },
+  async created() {
+    await this.fetchCustomers()
+    this.getCustomers.map(customer => this.cusNames.push(customer.name))
+  }
 };
 </script>

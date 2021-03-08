@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="getUserData.role !== 'Customer'">
     <h1 class="subheading teal--text">Dashboard</h1>
     <v-row>
       <v-col>

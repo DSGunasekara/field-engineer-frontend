@@ -76,6 +76,8 @@ export default {
         return this.links
       } else if (this.getProfile.role === "Admin"){
         return this.links;
+      }else if (this.getProfile.role === "Customer") {
+        return this.links.filter(link=> link.text === "Profile");
       }else{
         return this.links.filter(link=> link.text !== "Engineers")
       }

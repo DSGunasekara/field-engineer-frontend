@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Login",
   data: () => ({
@@ -85,12 +85,20 @@ export default {
         this.loading = false;
         this.snackbar = true;
         this.text = "Logged In successfully";
-        await this.$router.push("/");
+        if(await this.getUserData.role !== "Customer"){
+          await this.$router.push("/");
+        }else{
+          await this.$router.push("/profile");
+        }
+
       }catch (error){
         console.log(error)
       }
     },
   },
+  computed:{
+    ...mapGetters(["getUserData"])
+  }
 };
 </script>
 

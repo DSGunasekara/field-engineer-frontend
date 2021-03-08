@@ -5,6 +5,7 @@ const state = {
     profile: null,
     user: null,
     engineers: [],
+    customers: []
 };
 
 const getters = {
@@ -12,6 +13,7 @@ const getters = {
     getProfile: (state) => state.profile,
     getUserData: (state) => state.user,
     allEngineers: (state) => state.engineers,
+    getCustomers: (state) => state.customers
 };
 
 
@@ -23,6 +25,19 @@ const actions = {
                 ] = `Bearer ${localStorage.getItem("access_token")}`;
             const response = await axios.get("user/engineers")
             commit("setEngineers", response.data);
+            return response.status
+        }catch (error){
+            console.log(error)
+            return error.response
+        }
+    },
+    async fetchCustomers({ commit }) {
+        try {
+            axios.defaults.headers.common[
+                "Authorization"
+                ] = `Bearer ${localStorage.getItem("access_token")}`;
+            const response = await axios.get("user/customers")
+            commit("setCustomers", response.data);
             return response.status
         }catch (error){
             console.log(error)
@@ -149,6 +164,7 @@ const mutations = {
     setUser: (state, user) => (state.user = user),
     setProfile: (state, profile) => (state.profile = profile),
     setEngineers: (state, engineers) => (state.engineers = engineers),
+    setCustomers: (state, customers) => (state.customers = customers),
 };
 
 export default {
