@@ -41,9 +41,55 @@
             >
           </v-flex>
           <v-flex xs6 sm4 md1 v-if="getUserData.role === 'Engineer'">
-            <v-btn outlined color="red" class="mx-5" @click="removeJob(job._id)"
-            ><v-icon>mdi-delete</v-icon> Reject</v-btn
+<!--            <v-btn outlined color="red" class="mx-5" @click="removeJob(job._id)"-->
+<!--            ><v-icon>mdi-delete</v-icon> Reject</v-btn-->
+<!--            >-->
+          <div class="text-center">
+            <v-dialog
+                v-model="dialog"
+                width="500"
             >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    class="mx-5"
+                    color="red lighten-2"
+                    dark
+                    outlined
+                    v-bind="attrs"
+                    v-on="on"
+                ><v-icon>mdi-delete</v-icon>
+                  Reject
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-card-title class="headline grey lighten-2">
+                  Are you sure you want to reject this job?
+                </v-card-title>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      color="red lighten-2"
+                      text
+                      @click="removeJob(job._id)"
+                  >
+                    Reject
+                  </v-btn>
+                  <v-btn
+                      class="mx-5"
+                      color="primary"
+                      text
+                      @click="dialog = false"
+                  >
+                    Cancel
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
           </v-flex>
         </v-layout>
         <v-divider></v-divider>
@@ -73,7 +119,8 @@ export default {
       loading: false,
       text: '',
       Done: '#3cd150',
-      Pending: '#ffaa2c'
+      Pending: '#ffaa2c',
+      dialog: false
     }
   },
   methods:{
@@ -90,6 +137,7 @@ export default {
         }
         // const response = await this.rejectJob(jobId, this.getProfile._id)
         const response = await this.rejectJob(job)
+        this.dialog = false
         if(response !== 200){
           this.loading = false
           this.snackbar = true

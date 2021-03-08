@@ -40,6 +40,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" :loading="loading"
+        >Close</v-btn
+        >
+      </template>
+    </v-snackbar>
   </v-row>
 </template>
 
@@ -50,6 +59,11 @@ name: "UpdateInventory",
   props:["item"],
   data: () => ({
     dialog: false,
+    snackbar: false,
+    loading: false,
+    text: '',
+    note: '',
+    msgColor: '',
   }),
   methods:{
     ...mapActions(["updateItem"]),
@@ -63,13 +77,23 @@ name: "UpdateInventory",
         inventoryLocation: this.item.inventoryLocation
       }
       try {
-        await this.updateItem(item)
+        const res = await this.updateItem(item)
         this.dialog = false
+        this.responseMsg(res, "Updated the item")
       }catch (error){
         console.log(error)
       }
-
-
+    },
+    responseMsg(response, ok, er){
+      er = er || "An error occurred"
+      this.snackbar = true
+      if(response !== 200){
+        this.text = er
+        this.msgColor = "pink"
+        return
+      }
+      this.text = ok
+      this.msgColor = "green"
     }
   }
 }

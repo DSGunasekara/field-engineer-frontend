@@ -55,9 +55,56 @@
           </v-flex>
 
           <v-flex xs6 sm4 md1 v-if="request.status !== 'Approved'">
-            <v-btn outlined color="red" @click="removeReq(request._id)"
-            ><v-icon>mdi-delete</v-icon></v-btn
-            >
+<!--            <v-btn outlined color="red" @click="removeReq(request._id)"-->
+<!--            ><v-icon>mdi-delete</v-icon></v-btn-->
+<!--            >-->
+            <div class="text-center">
+              <v-dialog
+                  v-model="dialog"
+                  width="550"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                      class="mx-5"
+                      color="red lighten-2"
+                      dark
+                      outlined
+                      v-bind="attrs"
+                      v-on="on"
+                  ><v-icon>mdi-delete</v-icon>
+                    Reject
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title class="headline grey lighten-2">
+                    Are you sure you want to delete this request?
+                  </v-card-title>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="red lighten-2"
+                        text
+                        @click="removeReq(request._id)"
+                    >
+                      Delete
+                    </v-btn>
+                    <v-btn
+                        class="mx-5"
+                        color="primary"
+                        text
+                        @click="dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </div>
+
           </v-flex>
 
         </v-layout>
@@ -72,6 +119,11 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
 name: "EngineerRequests",
+  data(){
+    return{
+      dialog: false
+    }
+  },
   methods:{
     ...mapActions(["fetchRequests", "deleteRequest"]),
     async removeReq(id){

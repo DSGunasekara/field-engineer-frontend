@@ -63,9 +63,53 @@
             <UpdateJob class="mx-2 my-n2" v-bind:job="job" />
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <v-btn outlined color="red" class="mx-1" @click="removeJob(job._id)"
-              ><v-icon>mdi-delete</v-icon></v-btn
-            >
+            <div class="text-center">
+              <v-dialog
+                  v-model="dialog"
+                  width="500"
+                  :retain-focus="false"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                      class="mx-1"
+                      color="red lighten-2"
+                      dark
+                      outlined
+                      v-bind="attrs"
+                      v-on="on"
+                  ><v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title class="headline grey lighten-2">
+                    Are you sure you want to remove this job?
+                  </v-card-title>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="red lighten-2"
+                        text
+                        @click="removeJob(job._id)"
+                    >
+                      Remove
+                    </v-btn>
+                    <v-btn
+                        class="mx-5"
+                        color="primary"
+                        text
+                        @click="dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </div>
+
           </v-flex>
           <v-flex xs6 sm4 md1>
             <v-btn outlined color="green" @click="viewJob(job._id)"
@@ -76,6 +120,15 @@
         <v-divider></v-divider>
       </v-card>
     </v-container>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false" :loading="loading"
+        >Close</v-btn
+        >
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -95,7 +148,13 @@ export default {
   data(){
     return {
       Done: '#3cd150',
-      Pending: '#ffaa2c'
+      Pending: '#ffaa2c',
+      dialog: false,
+      snackbar: false,
+      loading: false,
+      text: '',
+      note: '',
+      msgColor: '',
     }
   },
   methods: {
@@ -109,13 +168,26 @@ export default {
     async removeJob(id) {
       //TODO: create a modal to asking agree to delete
       try {
-       await this.deleteJob(id);
+       const res = await this.deleteJob(id);
+       this.responseMsg(res, "Job deleted")
+       this.dialog = false
       }catch (error){
         console.log(error)
       }
     },
     viewJob(jobId){
       this.$router.push(`/job/${jobId}`)
+    },
+    responseMsg(response, ok, er){
+      er = er || "An error occurred"
+      this.snackbar = true
+      if(response !== 200){
+        this.text = er
+        this.msgColor = "pink"
+        return
+      }
+      this.text = ok
+      this.msgColor = "green"
     }
   },
   computed: {

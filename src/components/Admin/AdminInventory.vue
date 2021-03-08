@@ -39,9 +39,55 @@
           </v-flex>
 
           <v-flex xs6 sm4 md1 v-if="getRole === 'Admin'">
-            <v-btn outlined color="red" @click="deleteItem(item._id)"
-            ><v-icon>mdi-delete</v-icon> Delete</v-btn
-            >
+<!--            <v-btn outlined color="red" @click="deleteItem(item._id)"-->
+<!--            ><v-icon>mdi-delete</v-icon> Delete</v-btn-->
+<!--            >-->
+            <div class="text-center">
+              <v-dialog
+                  v-model="dialog"
+                  width="500"
+                  :retain-focus="false"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                      color="red lighten-2"
+                      dark
+                      outlined
+                      v-bind="attrs"
+                      v-on="on"
+                  ><v-icon>mdi-delete</v-icon>
+                    Reject
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title class="headline grey lighten-2">
+                    Are you sure you want to delete this item?
+                  </v-card-title>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="red lighten-2"
+                        text
+                        @click="deleteItem(item._id)"
+                    >
+                      Delete
+                    </v-btn>
+                    <v-btn
+                        class="mx-5"
+                        color="primary"
+                        text
+                        @click="dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </div>
           </v-flex>
           <v-flex xs6 sm4 md1 v-if="getRole === 'Admin'">
             <UpdateInventory v-bind:item="item"/>
@@ -51,6 +97,12 @@
         <v-divider></v-divider>
       </v-card>
     </v-container>
+    <v-snackbar top v-model="snackbar">
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn :color="`${msgColor}`" text v-bind="attrs" @click="snackbar = false" :loading="loading">Close</v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -69,17 +121,32 @@ export default {
   },
   data(){
     return{
-      search: ''
+      search: '',
+      snackbar: false,
+      loading: false,
+      text: '',
+      msgColor:'',
+      dialog: false
     }
   },
   methods:{
     ...mapActions(["fetchItems", "removeItem"]),
     async deleteItem(itemId){
       try{
-        await this.removeItem(itemId)
+        const res = await this.removeItem(itemId)
+        this.responseMsg(res, "Item removed")
       }catch (error){
         console.log(error)
       }
+    },
+    responseMsg(response, ok){
+      this.snackbar = true
+      if(response !== 200){
+        this.text = "An error occurred"
+        this.msgColor = "pink"
+      }
+      this.text = ok
+      this.msgColor = "green"
     }
   },
   computed:{

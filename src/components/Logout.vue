@@ -5,7 +5,7 @@
       width="400"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn  v-bind="attrs" v-on="on" text class="grey--text">
+        <v-btn  v-bind="attrs" v-on="on" text color="red lighten-2">
           <span> Log out</span>
           <v-icon>mdi-logout</v-icon>
         </v-btn>

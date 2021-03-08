@@ -66,7 +66,7 @@ export default {
       this.password = "adsg1997"
     },
     engData(){
-      this.email = "adsgunasekara18@gmail.com"
+      this.email = "john@gmail.com"
       this.password = "adsg1997"
     },cusData(){
       this.email = "cusJohn@gmail.com"

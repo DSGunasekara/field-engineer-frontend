@@ -46,10 +46,57 @@
           </v-card-text>
           <v-card-actions>
             <div v-if="getProfile">
-              <v-btn v-if="getProfile.role === 'Admin'" outlined color="red" @click="deleteEngineer(engineer._id)">
-                <v-icon small left>mdi-delete</v-icon>
-                <span class="">Remove</span>
-              </v-btn>
+<!--              <v-btn v-if="getProfile.role === 'Admin'" outlined color="red" @click="deleteEngineer(engineer._id)">-->
+<!--                <v-icon small left>mdi-delete</v-icon>-->
+<!--                <span class="">Remove</span>-->
+<!--              </v-btn>-->
+              <div class="text-center">
+                <v-dialog
+                    v-model="dialog"
+                    width="600"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        v-if="getProfile.role === 'Admin'"
+                        class="mx-5"
+                        color="red lighten-2"
+                        dark
+                        outlined
+                        v-bind="attrs"
+                        v-on="on"
+                    ><v-icon>mdi-delete</v-icon>
+                      Remove
+                    </v-btn>
+                  </template>
+
+                  <v-card>
+                    <v-card-title class="headline grey lighten-2">
+                      Are you sure you want to remove this engineer?
+                    </v-card-title>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                          color="red lighten-2"
+                          text
+                          @click="deleteEngineer(engineer._id)"
+                      >
+                        Reject
+                      </v-btn>
+                      <v-btn
+                          class="mx-5"
+                          color="primary"
+                          text
+                          @click="dialog = false"
+                      >
+                        Cancel
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </div>
               <v-rating
                   @input="addRating($event, engineer._id)"
                   v-model="engineer.rate"
@@ -70,7 +117,8 @@ export default {
   data() {
     return {
       loading: true,
-      search: ''
+      search: '',
+      dialog: false
     };
   },
   methods: {
