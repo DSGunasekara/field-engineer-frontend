@@ -40,7 +40,7 @@
             ><v-icon>mdi-eye</v-icon> View</v-btn
             >
           </v-flex>
-          <v-flex xs6 sm4 md1>
+          <v-flex xs6 sm4 md1 v-if="getUserData.role === 'Engineer'">
             <v-btn outlined color="red" class="mx-5" @click="removeJob(job._id)"
             ><v-icon>mdi-delete</v-icon> Reject</v-btn
             >
