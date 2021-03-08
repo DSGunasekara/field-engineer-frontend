@@ -50,6 +50,10 @@
                 <v-icon small left>mdi-delete</v-icon>
                 <span class="">Remove</span>
               </v-btn>
+              <v-rating
+                  @input="addRating($event, engineer._id)"
+                  v-model="engineer.rate"
+              ></v-rating>
             </div>
           </v-card-actions>
         </v-card>
@@ -70,14 +74,21 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchEngineers", "getUser", "removeEngineer"]),
+    ...mapActions(["fetchEngineers", "getUser", "removeEngineer", "updateUser"]),
     async deleteEngineer(engineerId){
       try {
         await this.removeEngineer(engineerId)
       }catch (error){
         console.log(error)
       }
-  },
+    },
+    async addRating(value, id) {
+      const user = {
+        id: id,
+        rate: value
+      }
+      await this.updateUser(user)
+    },
   },
   computed: {
     ...mapGetters(["allEngineers", "getProfile"]),

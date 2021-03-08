@@ -39,7 +39,6 @@
             <v-icon>mdi-map-marker</v-icon>
             {{ getProfile.state }}, {{ getProfile.country }}
           </v-list-item-title>
-
           <v-list-item-title class="ma-2">
             <v-icon>mdi-briefcase</v-icon>
             {{ getProfile.role }}
@@ -53,6 +52,12 @@
               getProfile.availability === true ? "Available" : "Not Available"
             }}
             <v-btn outlined x-small class="mx-3" @click="updateStatus">change status</v-btn>
+          </v-list-item-title>
+          <v-list-item-title class="ma-2" v-if="getProfile.role === 'Engineer'">
+            <v-rating
+                readonly
+                v-model="getProfile.rate"
+            ></v-rating>
           </v-list-item-title>
         </div>
       </v-list-item-content>
