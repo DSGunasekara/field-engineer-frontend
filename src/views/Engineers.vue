@@ -1,16 +1,19 @@
 <template>
   <v-container class="my-5">
-    <h1 class="subheading grey--text">Engineers</h1>
+    <h1 class="subheading teal--text">Engineers</h1>
 <!--    <div v-if="loading == true">-->
 <!--      <v-progress-circular indeterminate color="primary"></v-progress-circular>-->
 <!--    </div>-->
-    <v-layout row wrap v-if="allEngineers.length !== 0">
+    <div class="search-wrapper">
+      <v-text-field type="text" v-model="search" placeholder="Search Engineers"/>
+    </div>
+    <v-layout row wrap v-if="filteredList.length !== 0">
       <v-flex
         xs12
         sm6
         md4
         lg3
-        v-for="(engineer, index) in allEngineers"
+        v-for="(engineer, index) in filteredList"
         :key="index"
       >
         <v-card text class="ma-3">
@@ -63,6 +66,7 @@ export default {
   data() {
     return {
       loading: true,
+      search: ''
     };
   },
   methods: {
@@ -77,6 +81,9 @@ export default {
   },
   computed: {
     ...mapGetters(["allEngineers", "getProfile"]),
+    filteredList() {
+      return this.allEngineers.filter(item => item.name.toLowerCase().includes(this.search.toLowerCase()))
+    }
   },
   async created() {
     try {

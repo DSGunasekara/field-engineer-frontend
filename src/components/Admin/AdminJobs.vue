@@ -10,20 +10,20 @@
           <template v-slot:activator="{ on }">
             <v-btn small text color="grey" @click="sortBy('title')" v-on="on">
               <v-icon small left>mdi-folder</v-icon>
-              <span class="caption text-lowercase">By project name</span>
+              <span class="caption text-lowercase">By Job Title</span>
             </v-btn>
           </template>
-          <span>Sort by project name</span>
+          <span>Sort by Job Title</span>
         </v-tooltip>
 
         <v-tooltip top>
           <template v-slot:activator="{ on }">
-            <v-btn small text color="grey" @click="sortBy('due')" v-on="on">
+            <v-btn small text color="grey" @click="sortBy('date')" v-on="on">
               <v-icon small left>mdi-account-group</v-icon>
-              <span class="caption text-lowercase">By Person</span>
+              <span class="caption text-lowercase">By Date</span>
             </v-btn>
           </template>
-          <span>Sort by project author</span>
+          <span>Sort by Date</span>
         </v-tooltip>
       </v-layout>
 
@@ -54,18 +54,12 @@
 
           <v-flex xs2 sm4 md1>
             <div class="right ml-5">
-              <v-chip small :class="`white--text my-2 caption ${job.status}`">{{
+              <v-chip small :class="`${job.status} white--text my-2 caption`"  :color="`${job.status === 'Done'? Done: Pending}`">{{
                 job.status
               }}</v-chip>
-              <!-- <div :class="`${job.status}`">
-                {{ job.status }}
-              </div> -->
             </div>
           </v-flex>
           <v-flex xs6 sm4 md1>
-            <!-- <v-btn text class="grey--text">
-              <v-icon>mdi-file-edit-outline</v-icon> edit</v-btn
-            > -->
             <UpdateJob class="mx-2 my-n2" v-bind:job="job" />
           </v-flex>
           <v-flex xs6 sm4 md1>
@@ -98,11 +92,17 @@ export default {
     AddJob,
     UpdateJob,
   },
+  data(){
+    return {
+      Done: '#3cd150',
+      Pending: '#ffaa2c'
+    }
+  },
   methods: {
     ...mapActions(["fetchJobs", "deleteJob"]),
     sortBy(prop) {
       //TODO: sorting need to updated
-      this.projects = this.projects.sort((a, b) =>
+      this.allJobs = this.allJobs.sort((a, b) =>
         a[prop] < b[prop] ? -1 : 1
       );
     },
@@ -153,16 +153,19 @@ export default {
 .project.Pending {
   border-left: 4px solid #ffaa2c;
 }
-.project.overdue {
+.project.Reschedule {
   border-left: 4px solid #f83e70;
 }
 .v-chip.Assigned {
   background: #3cd1c2;
 }
+.v-chip.Done {
+  background: #3cd150;
+}
 .v-chip.Pending {
   background: #ffaa2c;
 }
-.v-chip.overdue {
+.v-chip.Reschedule {
   background: #f83e70;
 }
 </style>

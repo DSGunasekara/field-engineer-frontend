@@ -9,6 +9,7 @@ import Job from "@/components/Job";
 import AdminInventory from "@/components/Admin/AdminInventory";
 import Request from "@/components/Request";
 import Dashboard from "@/views/Dashboard";
+import Report from "@/views/Report";
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,14 @@ const routes = [
     component: Engineers,
     meta: {
       requireAdmin:true,
+    },
+  },
+  {
+    path: "/reports",
+    name: "reports",
+    component: Report,
+    meta: {
+      requireAuth: true,
     },
   },
   {

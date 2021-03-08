@@ -66,6 +66,7 @@ export default {
         { icon: "mdi-account-group", text: "Engineers", route: "/engineers" },
         { icon: "mdi-store", text: "Inventory", route: "/inventory" },
         { icon: "mdi-message-processing", text: "Requests", route: "/requests" },
+        { icon: "mdi-file-document-multiple", text: "Reports", route: "/reports" },
       ],
     };
   },
@@ -79,7 +80,7 @@ export default {
       }else if (this.getProfile.role === "Customer") {
         return this.links.filter(link=> link.text === "Profile" || link.text === "Dashboard");
       }else{
-        return this.links.filter(link=> link.text !== "Engineers")
+        return this.links.filter(link=> link.text !== "Engineers" & link.text !== "Reports")
       }
     }
   }

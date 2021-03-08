@@ -30,7 +30,7 @@
 
           <v-flex xs2 sm4 md1>
             <div class="right ml-5">
-              <v-chip small :class="`white--text my-2 caption ${job.status}`">{{
+              <v-chip small :class="`white--text my-2 caption ${job.status}`" :color="`${job.status === 'Done'? Done: Pending}`">{{
                   job.status
                 }}</v-chip>
             </div>
@@ -72,6 +72,8 @@ export default {
       snackbar: false,
       loading: false,
       text: '',
+      Done: '#3cd150',
+      Pending: '#ffaa2c'
     }
   },
   methods:{
