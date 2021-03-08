@@ -85,11 +85,8 @@ export default {
         this.loading = false;
         this.snackbar = true;
         this.text = "Logged In successfully";
-        if(await this.getUserData.role !== "Customer"){
-          await this.$router.push("/");
-        }else{
-          await this.$router.push("/profile");
-        }
+
+        await this.$router.push("/");
 
       }catch (error){
         console.log(error)

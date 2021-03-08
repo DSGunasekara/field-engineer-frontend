@@ -44,7 +44,7 @@
             <v-icon>mdi-briefcase</v-icon>
             {{ getProfile.role }}
           </v-list-item-title>
-          <v-list-item-title class="ma-2">
+          <v-list-item-title class="ma-2" v-if="getProfile.role !== 'Customer'">
             <v-icon v-if="getProfile.availability === true" small left
             >mdi-check</v-icon
             >

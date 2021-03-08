@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="getUserData.role !== 'Customer'">
+  <div class="container">
     <h1 class="subheading teal--text">Dashboard</h1>
     <v-row>
       <v-col>
@@ -10,7 +10,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col v-if="getUserData.role !== 'Customer' ">
         <h2 v-if="getUserData.role !== 'Admin' " class="font-weight-light">Pending Requests: {{ getUserReqs.length }}</h2>
         <h2 v-if="getUserData.role === 'Admin' " class="font-weight-light">Pending Requests: {{ getPendingReqs.length }}</h2>
       </v-col>

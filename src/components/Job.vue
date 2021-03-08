@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-<!--    {{jobView[0]}}-->
     <v-card>
       <v-row>
         <v-col class="ml-5 " cols="auto">Title: </v-col>
@@ -48,11 +47,11 @@
       </v-row>
       <v-row>
         <v-col class="ml-5" cols="auto">Customer Name: </v-col>
-        <v-col class="font-weight-bold" cols="auto">{{ jobView.lconName }}</v-col>
+        <v-col class="font-weight-bold" cols="auto">{{ jobView.customer.name }}</v-col>
       </v-row>
       <v-row>
         <v-col class="ml-5" cols="auto">Customer Contact No: </v-col>
-        <v-col class="font-weight-bold" cols="auto">{{ jobView.lconContactNo }}</v-col>
+        <v-col class="font-weight-bold" cols="auto">{{ jobView.customer.contactNo }}</v-col>
       </v-row>
       <v-expansion-panels focusable>
         <v-expansion-panel>
@@ -70,10 +69,10 @@
     <h1 class="teal--text" style="text-align: center; margin-top: 20px;">JOB TIMELINE</h1>
     <br>
     <div>
-      <v-btn @click="startJob" v-if="getRole !== 'Admin'"
+      <v-btn @click="startJob" v-if="getRole === 'Engineer'"
              outlined color="green" >Start Job</v-btn>
       <b><span style="margin-left: 20px" v-if="jobView.startedTime">Started Time: {{ jobView.startedTime | moment}}</span></b>
-      <v-btn @click="endJob" v-if="getRole !== 'Admin'"
+      <v-btn @click="endJob" v-if="getRole === 'Engineer'"
              outlined color="red" style="margin-left: 20px">End Job</v-btn>
       <b><span style="margin-left: 20px" v-if="jobView.endTime">Ended Time: {{ jobView.endTime | moment}}</span></b>
       <br><br>
