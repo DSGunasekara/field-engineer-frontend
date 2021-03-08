@@ -199,6 +199,10 @@ export default {
     },
     async endJob(){
       try {
+        if(!this.jobView.startedTime){
+          this.responseMsg(500, '', 'Job need to be started first')
+          return
+        }
         const time = new Date().toISOString()
         const job = {
           id: this.$route.params.id,
