@@ -7,6 +7,9 @@
       <v-btn text color="purple" @click="engData">
         Demo Engineer
       </v-btn>
+      <v-btn text color="green" @click="cusData">
+        Demo Customer
+      </v-btn>
       <v-text-field
           v-model="email"
           label="Email"
@@ -64,6 +67,9 @@ export default {
     },
     engData(){
       this.email = "adsgunasekara18@gmail.com"
+      this.password = "adsg1997"
+    },cusData(){
+      this.email = "cusJohn@gmail.com"
       this.password = "adsg1997"
     },
     async submit() {
