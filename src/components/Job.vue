@@ -114,6 +114,19 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <div class="text-center">
+      <h3 class="mx-10 overline" style="color: teal">Job Rating</h3>
+      <v-rating
+          v-if="getRole === 'Customer'"
+          @input="addRating($event)"
+          v-model="jobView.starRate"
+      ></v-rating>
+      <v-rating
+          v-if="getRole !== 'Customer'"
+          readonly
+          v-model="jobView.starRate"
+      ></v-rating>
+    </div>
   </div>
 </template>
 
@@ -137,11 +150,18 @@ export default {
       text: '',
       note: '',
       publicPath: process.env.BASE_URL,
-      msgColor: ''
+      msgColor: '',
     }
   },
   methods:{
     ...mapActions(["fetchJobs", "updateJob", "fetchUserJobs","fetchReqItems", "updateImages", "rejectJob"]),
+    async addRating(value) {
+      const job = {
+        id: this.$route.params.id,
+        starRate: value
+      }
+      await this.updateJob(job)
+    },
     async removeJob(userId){
       const job = {
         job:this.$route.params.id,
@@ -171,7 +191,6 @@ export default {
           setDate: true,
           status: "Started"
         }
-        console.log()
         const response = await this.updateJob(job)
         this.responseMsg(response, "Job Started")
       }catch (error){
@@ -234,7 +253,7 @@ export default {
     },
     getRole(){
       return this.getProfile.role
-    }
+    },
   },
   async created() {
     try {
