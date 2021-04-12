@@ -56,7 +56,7 @@
                       v-bind="attrs"
                       v-on="on"
                   ><v-icon>mdi-delete</v-icon>
-                    Reject
+                    Delete
                   </v-btn>
                 </template>
 

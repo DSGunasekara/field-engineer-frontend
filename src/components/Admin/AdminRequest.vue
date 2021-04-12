@@ -9,20 +9,20 @@
           <template v-slot:activator="{ on }">
             <v-btn small text color="grey" @click="sortBy('title')" v-on="on">
               <v-icon small left>mdi-folder</v-icon>
-              <span class="caption text-lowercase">By project name</span>
+              <span class="caption text-lowercase">By Job Name</span>
             </v-btn>
           </template>
-          <span>Sort by project name</span>
+          <span>Sort by Job Name</span>
         </v-tooltip>
 
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <v-btn small text color="grey" @click="sortBy('due')" v-on="on">
               <v-icon small left>mdi-account-group</v-icon>
-              <span class="caption text-lowercase">By Person</span>
+              <span class="caption text-lowercase">By Field Engineer</span>
             </v-btn>
           </template>
-          <span>Sort by project author</span>
+          <span>Sort by Field Engineer</span>
         </v-tooltip>
       </v-layout>
       <v-card text v-for="(request, index) in allRequests" :key="index" style="margin-top: 15px">

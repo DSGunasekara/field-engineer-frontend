@@ -83,7 +83,7 @@
                           text
                           @click="deleteEngineer(engineer._id)"
                       >
-                        Reject
+                        Remove
                       </v-btn>
                       <v-btn
                           class="mx-5"
